@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>集団下校 vol.2 | ユニットライブ</title>
+    <meta name="description" content="お笑いユニットライブ「集団下校 vol.2」の公式サイトです。">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&family=Yomogi&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            /* 黒板テーマ */
+            --bg-board: #2E5D4B;   
+            --text-chalk: #F0F0F0; 
+            
+            /* カラーパレット */
+            --logo-green: #3e6b42;
+            --gold-btn: #b4963c;
+            --card-bg: #1a1a1a;
+            --accent-wood: #8B5A2B;
+            
+            --font-hand: 'Yomogi', cursive;
+            --font-serif: 'Kaisei Decol', serif;
+            --footer-height: 80px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #111;
+            color: var(--text-chalk);
+            font-family: var(--font-serif);
+            line-height: 1.8;
+            padding: 20px 20px calc(var(--footer-height) + 40px) 20px;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* --- Layout Container --- */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--bg-board);
+            border: 12px solid var(--accent-wood);
+            border-radius: 4px;
+            padding: 40px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        /* 黒板の粉受け */
+        .container::after {
+            content: '';
+            display: block;
+            width: calc(100% + 24px);
+            height: 18px;
+            background-color: var(--accent-wood);
+            position: absolute;
+            bottom: -24px;
+            left: -12px;
+            border-radius: 2px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 {
+            font-family: var(--font-hand);
+            font-weight: 400;
+        }
+
+        a { text-decoration: none; transition: opacity 0.3s; }
+        a:hover { opacity: 0.8; }
+
+        /* --- Header & Logo --- */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-wrapper {
+            display: inline-block;
+            background-color: var(--logo-green);
+            padding: 15px 25px;
+            margin-bottom: 10px;
+            transform: rotate(-1deg);
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .logo-sub {
+            display: block;
+            font-family: var(--font-hand);
+            font-size: 1rem;
+            text-align: left;
+            margin-bottom: -10px;
+            color: #fff;
+        }
+
+        .logo-main {
+            font-family: var(--font-hand);
+            font-size: 3.5rem;
+            line-height: 1.1;
+            color: #fff;
+            text-shadow: 
+                2px 2px 0px rgba(255,255,255,0.2),
+                -1px -1px 0 rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 400px) {
+            .logo-main { font-size: 2.8rem; }
+        }
+
+        /* --- Intro Text (Home Room) --- */
+        .intro-text {
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 20px 0 40px;
+            padding: 15px;
+            border-top: 1px dashed rgba(255,255,255,0.3);
+            border-bottom: 1px dashed rgba(255,255,255,0.3);
+            line-height: 1.8;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        /* --- Main Visual --- */
+        .main-visual {
+            width: 100%;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .flyer-placeholder {
+            width: 100%;
+            border: 8px solid rgba(255,255,255,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            display: block;
+        }
+
+        /* --- Section Styling --- */
+        section { margin-bottom: 50px; }
+
+        .section-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed rgba(255,255,255,0.3);
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        /* --- Video Section --- */
+        .video-container {
+            width: 100%;
+            border: 4px solid rgba(255,255,255,0.1);
+            background-color: #000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            line-height: 0;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- Info List --- */
+        .info-list { list-style: none; font-size: 1.05rem; }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+        .info-label {
+            font-family: var(--font-hand);
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .info-value { 
+            padding-left: 10px; 
+            font-weight: 700; 
+            font-size: 1.2rem;
+        }
+
+        /* --- Cards (Members & Staff) --- */
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            list-style: none;
+        }
+
+        .card-link {
+            display: block;
+            height: 100%;
+        }
+
+        .card-box {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 0;
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+            height: 100%;
+        }
+
+        .card-link:hover .card-box {
+            transform: translateY(-3px);
+            border-color: var(--gold-btn);
+        }
+
+        .card-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.2);
+            font-size: 0.8rem;
+        }
+        
+        .card-info { padding: 15px 10px; }
+
+        .card-name {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .card-role {
+            font-size: 0.75rem;
+            color: #aaa;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .sns-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .sns-links i { color: var(--gold-btn); font-size: 1.1rem; }
+
+        /* --- Guidelines --- */
+        .guidelines-box {
+            background-color: rgba(0,0,0,0.2);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        .guidelines-box ul { padding-left: 20px; margin-top: 10px; }
+        .guidelines-box li { margin-bottom: 5px; }
+
+        /* --- Map --- */
+        .map-wrapper {
+            border: 4px solid #fff;
+            line-height: 0;
+            background-color: #eee;
+        }
+
+        /* --- Footer --- */
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.75rem;
+            opacity: 0.6;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+        }
+
+        /* --- Sticky Ticket Button --- */
+        .sticky-ticket-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--footer-height);
+            background: linear-gradient(to top, #111, rgba(17,17,17,0.95));
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 20px;
+        }
+
+        .btn-sticky {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            background: linear-gradient(135deg, #c5a84e 0%, #b4963c 100%);
+            color: #111;
+            text-align: center;
+            padding: 12px 0;
+            border-radius: 4px;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: 1px solid #e0c870;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .btn-sticky:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+        
+        .btn-sticky:active { transform: translateY(1px); }
+
+        /* レスポンシブ調整 */
+        @media (min-width: 600px) {
+            .container { padding: 60px 50px; }
+            .info-item { flex-direction: row; align-items: baseline; }
+            .info-label { width: 100px; flex-shrink: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo-wrapper">
+                <span class="logo-sub">ユニットライブ</span>
+                <h1 class="logo-main">集団下校</h1>
+            </div>
+            
+            <div class="intro-text">
+                吉本、ワタナベ、人力舎の<br>
+                芸歴一年目が集う同期ライブ｢集団下校｣🏫<br>
+                ネタとコーナーでバチバチの90分‼️
+            </div>
+        </header>
+
+        <div class="main-visual">
+            <img src="https://placehold.co/600x800/2E5D4B/F0F0F0?text=Flyer+Vol.2+Coming+Soon&font=playfair-display" alt="集団下校 vol.2 フライヤー" class="flyer-placeholder">
+        </div>
+
+        <section id="movie">
+            <h2 class="section-title">放送室</h2>
+            <p style="text-align: center; margin-bottom: 10px; font-size: 0.9rem;">第一回ダイジェスト映像</p>
+            <div class="video-container">
+                <video controls preload="metadata" poster="https://placehold.co/640x360/000/FFF?text=Digest+Movie">
+                    <source src="./集団下校_ダイジェスト_vol1.mp4" type="video/mp4">
+                    <p>動画を再生するには、videoタグをサポートしたブラウザが必要です。</p>
+                </video>
+            </div>
+        </section>
+
+        <section id="info">
+            <h2 class="section-title">時間割</h2>
+            <ul class="info-list">
+                <li class="info-item">
+                    <span class="info-label">日時</span>
+                    <span class="info-value">2026年X月X日（土）<br>開場 19:45 / 開演 20:00</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">場所</span>
+                    <span class="info-value">池袋ムーブメントスタジオ<br><span style="font-size:0.8em; font-weight:normal;">(東京都豊島区池袋2-55-2)</span></span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">料金</span>
+                    <span class="info-value">¥1,500</span>
+                </li>
+            </ul>
+        </section>
+
+        <section id="member">
+            <h2 class="section-title">出演者</h2>
+            <div class="grid-list">
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">ドゥドゥディダーダー</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">エコ</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">フィッシュおさかな</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">ノースロード</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">最大パルプ</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">悪趣味な色彩のカエル</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-box">
+                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-info">
+                        <span class="card-name">ファズ宮</span>
+                        <div class="sns-links">
+                            <i class="fa-solid fa-microphone"></i>
+                            <i class="fa-brands fa-x-twitter"></i>
+                            <i class="fa-brands fa-instagram"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="staff">
+            <h2 class="section-title">職員室</h2>
+            <div class="grid-list">
+                <a href="https://tiget.net/users/1482915" target="_blank" class="card-link">
+                    <div class="card-box">
+                        <div class="card-img-box" style="background-color: #2a2a2a;">
+                            <i class="fa-solid fa-user-tie" style="font-size:2rem; color:#888;"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-role">主催</span>
+                            <span class="card-name">西野</span>
+                            <div class="sns-links">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="#" onclick="alert('公式ホームページは現在準備中です！'); return false;" class="card-link">
+                    <div class="card-box">
+                        <div class="card-img-box" style="background-color: #2a2a2a;">
+                            <i class="fa-solid fa-laptop-code" style="font-size:2rem; color:#888;"></i>
+                        </div>
+                        <div class="card-info">
+                            <span class="card-role">Web制作</span>
+                            <span class="card-name">関根</span>
+                            <div class="sns-links">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="guidelines">
+            <h2 class="section-title">校則（注意事項）</h2>
+            <div class="guidelines-box">
+                <ul>
+                    <li>客席内でのお食事は禁止です。水分補給のみ可能です。</li>
+                    <li>OPとEDのみ写真撮影可能です。（フラッシュ、シャッター音はNG）</li>
+                    <li>ネタ中の撮影・録音は禁止です。</li>
+                    <li>入場はQRコード提示が必要です。事前にご準備ください。</li>
+                    <li>差し入れは受付横のボックスへお願いします。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="access">
+            <h2 class="section-title">通学路</h2>
+            <div class="map-wrapper">
+                <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=池袋ムーブメントスタジオ&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+            </div>
+        </section>
+
+        <footer>
+            <p style="margin-bottom:10px;">© 2026 集団下校実行委員会</p>
+        </footer>
+    </div>
+
+    <div class="sticky-ticket-bar">
+        <a href="https://tiget.net/events/453593" class="btn-sticky" target="_blank">
+            チケットを予約する (¥1,500)
+        </a>
+    </div>
+
+</body>
+</html>
