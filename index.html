@@ -330,11 +330,18 @@
         
         .btn-sticky:active { transform: translateY(1px); }
 
-        /* レスポンシブ調整 */
+        /* --- 端末ごとの改行制御 --- */
+        .pc-br { display: none; }
+        
+        /* レスポンシブ調整（画面幅600px以上のPC/タブレット用） */
         @media (min-width: 600px) {
             .container { padding: 60px 50px; }
             .info-item { flex-direction: row; align-items: baseline; }
             .info-label { width: 100px; flex-shrink: 0; }
+            /* PCでのみ改行を表示 */
+            .pc-br { display: inline; }
+            /* PCではスマホ用の改行を非表示 */
+            .sp-br { display: none; }
         }
     </style>
 </head>
@@ -349,8 +356,8 @@
             
             <div class="intro-text">
                 吉本、ワタナベ、人力舎の<br>
-                芸歴一年目が集う同期ライブ｢集団下校｣🏫<br>
-                ネタとコーナーでバチバチの90分‼️
+                芸歴一年目が集う<br class="sp-br">同期ライブ｢集団下校｣🏫<br>
+                ネタとコーナーで<br class="sp-br">バチバチの90分‼️
             </div>
         </header>
 
@@ -374,7 +381,7 @@
             <ul class="info-list">
                 <li class="info-item">
                     <span class="info-label">日時</span>
-                    <span class="info-value">2026年X月X日（土）<br>開場 19:45 / 開演 20:00</span>
+                    <span class="info-value">2026年03月26日(木)<br>開場 18:45 / 開演 19:00 / 終演 20:30</span>
                 </li>
                 <li class="info-item">
                     <span class="info-label">場所</span>
@@ -393,7 +400,7 @@
                 <div class="card-box">
                     <div class="card-img-box">IMAGE</div>
                     <div class="card-info">
-                        <span class="card-name">ドゥドゥディダーダー</span>
+                        <span class="card-name">ドゥドゥディ<br class="pc-br">ダーダー</span>
                         <div class="sns-links">
                             <i class="fa-solid fa-microphone"></i>
                             <i class="fa-brands fa-x-twitter"></i>
@@ -415,7 +422,7 @@
                 <div class="card-box">
                     <div class="card-img-box">IMAGE</div>
                     <div class="card-info">
-                        <span class="card-name">フィッシュおさかな</span>
+                        <span class="card-name">フィッシュ<br class="pc-br">おさかな</span>
                         <div class="sns-links">
                             <i class="fa-solid fa-microphone"></i>
                             <i class="fa-brands fa-x-twitter"></i>
@@ -531,7 +538,7 @@
     </div>
 
     <div class="sticky-ticket-bar">
-        <a href="https://tiget.net/events/453593" class="btn-sticky" target="_blank">
+        <a href="https://tiget.net/events/470950" class="btn-sticky" target="_blank">
             チケットを予約する (¥1,500)
         </a>
     </div>
