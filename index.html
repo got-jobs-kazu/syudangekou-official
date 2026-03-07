@@ -361,9 +361,107 @@
             </div>
         </header>
 
-        <div class="main-visual">
-            <img src="https://placehold.co/600x800/2E5D4B/F0F0F0?text=Flyer+Vol.2+Coming+Soon&font=playfair-display" alt="集団下校 vol.2 フライヤー" class="flyer-placeholder">
+<div class="main-visual hero-anim-container">
+            <div class="sakura-petal" style="left: 10%; animation-delay: 0s;"></div>
+            <div class="sakura-petal" style="left: 30%; animation-delay: 2s;"></div>
+            <div class="sakura-petal" style="left: 60%; animation-delay: 1s;"></div>
+            <div class="sakura-petal" style="left: 80%; animation-delay: 3s;"></div>
+            
+            <img src="./bg_base.png" alt="背景" class="hero-bg">
+            
+            <img src="./board.png" alt="黒板" class="hero-board">
+            
+            <img src="./title.png" alt="集団下校" class="hero-title">
+            
+            <img src="./stamp.png" alt="vol.2" class="hero-stamp">
         </div>
+
+        <style>
+            .hero-anim-container {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 3 / 4; /* フライヤーの縦横比に合わせて調整してください */
+                overflow: hidden;
+                margin-bottom: 40px;
+                border: 8px solid rgba(255,255,255,0.1);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                background-color: #222; /* 画像読み込み前の仮背景 */
+            }
+
+            .hero-anim-container img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: auto;
+            }
+
+            /* ① 背景は最初から表示 */
+            .hero-bg {
+                z-index: 1;
+            }
+
+            /* ② 黒板のアニメーション（0秒〜0.5秒） */
+            .hero-board {
+                z-index: 2;
+                transform: translateY(-100%); /* 最初は画面外（上） */
+                animation: dropBoard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            }
+            @keyframes dropBoard {
+                to { transform: translateY(0); }
+            }
+
+            /* ③ 文字のアニメーション（0.5秒〜1.2秒） */
+            .hero-title {
+                z-index: 3;
+                opacity: 0;
+                transform: translateX(-5%);
+                animation: showTitle 0.6s ease-out 0.5s forwards;
+            }
+            @keyframes showTitle {
+                to { opacity: 1; transform: translateX(0); }
+            }
+
+            /* ④ ハンコのアニメーション（1.2秒〜1.5秒） */
+            .hero-stamp {
+                z-index: 4;
+                opacity: 0;
+                transform: scale(3) rotate(20deg); /* 最初はデカくて傾いている */
+                animation: pressStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+            }
+            @keyframes pressStamp {
+                0% { opacity: 0; transform: scale(3) rotate(20deg); }
+                50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
+                100% { opacity: 1; transform: scale(1) rotate(-10deg); } /* バンッ！と元サイズに */
+            }
+
+            /* 桜の花びら（常時） */
+            .sakura-petal {
+                position: absolute;
+                top: -10%;
+                width: 12px;
+                height: 12px;
+                background-color: #ffb7c5;
+                border-radius: 50% 0 50% 50%;
+                transform: rotate(45deg);
+                z-index: 5;
+                animation: fall 5s linear infinite;
+                opacity: 0.8;
+            }
+            @keyframes fall {
+                0% { top: -10%; transform: translateX(0) rotate(45deg); opacity: 0; }
+                10% { opacity: 0.8; }
+                50% { transform: translateX(20px) rotate(90deg); }
+                90% { opacity: 0.8; }
+                100% { top: 110%; transform: translateX(-20px) rotate(135deg); opacity: 0; }
+            }
+        </style>
+        ```
+
+### 次のステップ
+
+まずは拓也さんにLINEを送って画像待ちですね！
+画像が届くまでの間に、このコードをあらかじめ `index.html` に組み込んでおいて、真っ黒な画面にダミーの桜が降る状態を作っておきましょうか？
 
         <section id="movie">
             <h2 class="section-title">放送室</h2>
