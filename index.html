@@ -343,6 +343,65 @@
             /* PCではスマホ用の改行を非表示 */
             .sp-br { display: none; }
         }
+        /* --- コンビ用カードの追加スタイル --- */
+        .combi-name-bar {
+            background-color: var(--logo-green);
+            color: #fff;
+            font-family: var(--font-serif);
+            font-weight: bold;
+            font-size: 0.95rem;
+            padding: 10px 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .member-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 15px 10px;
+        }
+
+        .member-person {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+
+        .member-person:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .member-name {
+            font-family: var(--font-serif);
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 8px;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .member-pos {
+            font-size: 0.7rem;
+            color: #aaa;
+            font-weight: normal;
+            display: block;
+        }
+
+        /* SNSアイコンをリンク化して押せるようにする */
+        .sns-links a {
+            color: var(--gold-btn);
+            transition: color 0.2s, transform 0.2s;
+            display: inline-block;
+        }
+        
+        .sns-links a:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -489,14 +548,28 @@
         <section id="member">
             <h2 class="section-title">出演者</h2>
             <div class="grid-list">
-                <div class="card-box">
-                    <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">ドゥドゥディ<br class="pc-br">ダーダー</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+<div class="card-box">
+                    <div class="combi-name-bar">ドゥドゥディダーダー</div>
+                    
+                    <div class="card-img-box" style="background-image: url('./310.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                    
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">坂口<span class="member-pos">（写真・左）</span></span>
+                            <div class="sns-links">
+                                <a href="https://x.com/dododedada_saka?s=20" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://www.instagram.com/dododedada_saka?igsh=MTZqN3VnMzFhNzhpbQ%3D%3D" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://stand.fm/channels/6925f8938ddb67b39644a013" target="_blank" title="ラジオ (stand.fm)"><i class="fa-solid fa-radio"></i></a>
+                            </div>
+                        </div>
+                        
+                        <div class="member-person">
+                            <span class="member-name">りゅーしょー伝説<span class="member-pos">（写真・右）</span></span>
+                            <div class="sns-links">
+                                <a href="https://x.com/legend_ryusho?s=20" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://stand.fm/channels/6925f8938ddb67b39644a013" target="_blank" title="ラジオ (stand.fm)"><i class="fa-solid fa-radio"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
