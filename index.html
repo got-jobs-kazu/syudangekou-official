@@ -15,26 +15,18 @@
     <style>
         /* --- CSS Variables --- */
         :root {
-            /* 黒板テーマ */
             --bg-board: #2E5D4B;   
             --text-chalk: #F0F0F0; 
-            
-            /* カラーパレット */
             --logo-green: #3e6b42;
             --gold-btn: #b4963c;
             --card-bg: #1a1a1a;
             --accent-wood: #8B5A2B;
-            
             --font-hand: 'Yomogi', cursive;
             --font-serif: 'Kaisei Decol', serif;
             --footer-height: 80px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: #111;
@@ -46,7 +38,7 @@
             background-size: 20px 20px;
         }
 
-        /* --- Layout Container --- */
+        /* --- Layout Container (黒板) --- */
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -72,21 +64,12 @@
             box-shadow: 0 5px 10px rgba(0,0,0,0.5);
         }
 
-        /* --- Typography --- */
-        h1, h2, h3 {
-            font-family: var(--font-hand);
-            font-weight: 400;
-        }
-
+        h1, h2, h3 { font-family: var(--font-hand); font-weight: 400; }
         a { text-decoration: none; transition: opacity 0.3s; }
         a:hover { opacity: 0.8; }
 
         /* --- Header & Logo --- */
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
+        header { text-align: center; margin-bottom: 30px; }
         .logo-wrapper {
             display: inline-block;
             background-color: var(--logo-green);
@@ -95,31 +78,17 @@
             transform: rotate(-1deg);
             box-shadow: 2px 4px 8px rgba(0,0,0,0.3);
         }
-
-        .logo-sub {
-            display: block;
-            font-family: var(--font-hand);
-            font-size: 1rem;
-            text-align: left;
-            margin-bottom: -10px;
-            color: #fff;
-        }
-
+        .logo-sub { display: block; font-family: var(--font-hand); font-size: 1rem; text-align: left; margin-bottom: -10px; color: #fff; }
         .logo-main {
             font-family: var(--font-hand);
             font-size: 3.5rem;
             line-height: 1.1;
             color: #fff;
-            text-shadow: 
-                2px 2px 0px rgba(255,255,255,0.2),
-                -1px -1px 0 rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.2), -1px -1px 0 rgba(0,0,0,0.1);
         }
-        
-        @media (max-width: 400px) {
-            .logo-main { font-size: 2.8rem; }
-        }
+        @media (max-width: 400px) { .logo-main { font-size: 2.8rem; } }
 
-        /* --- Intro Text (Home Room) --- */
+        /* --- Intro Text --- */
         .intro-text {
             text-align: center;
             font-size: 1.1rem;
@@ -133,363 +102,210 @@
             border-radius: 4px;
         }
 
-        /* --- Main Visual --- */
-        .main-visual {
+        /* --- Main Visual (Animation) --- */
+        .hero-anim-container {
+            position: relative;
             width: 100%;
+            aspect-ratio: 3 / 4;
+            overflow: hidden;
             margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .flyer-placeholder {
-            width: 100%;
             border: 8px solid rgba(255,255,255,0.1);
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            display: block;
+            background-color: #222;
+        }
+        .hero-anim-container img { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
+        .hero-bg { z-index: 1; }
+        .hero-board { z-index: 2; transform: translateY(-100%); animation: dropBoard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes dropBoard { to { transform: translateY(0); } }
+        .hero-title { z-index: 3; opacity: 0; transform: translateX(-5%); animation: showTitle 0.6s ease-out 0.5s forwards; }
+        @keyframes showTitle { to { opacity: 1; transform: translateX(0); } }
+        .hero-stamp {
+            z-index: 4; opacity: 0; transform: scale(3) rotate(20deg);
+            animation: pressStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+        }
+        @keyframes pressStamp {
+            0% { opacity: 0; transform: scale(3) rotate(20deg); }
+            50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(-10deg); }
+        }
+        .sakura-petal {
+            position: absolute; top: -10%; width: 12px; height: 12px;
+            background-color: #ffb7c5; border-radius: 50% 0 50% 50%;
+            transform: rotate(45deg); z-index: 5; animation: fall 5s linear infinite; opacity: 0.8;
+        }
+        @keyframes fall {
+            0% { top: -10%; transform: translateX(0) rotate(45deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            50% { transform: translateX(20px) rotate(90deg); }
+            90% { opacity: 0.8; }
+            100% { top: 110%; transform: translateX(-20px) rotate(135deg); opacity: 0; }
         }
 
-        /* --- Section Styling --- */
+        /* --- Sections & Info --- */
         section { margin-bottom: 50px; }
-
         .section-title {
-            font-size: 1.8rem;
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-            border-bottom: 2px dashed rgba(255,255,255,0.3);
-            display: inline-block;
-            min-width: 200px;
+            font-size: 1.8rem; text-align: center; margin-bottom: 30px;
+            padding-bottom: 10px; border-bottom: 2px dashed rgba(255,255,255,0.3);
+            display: inline-block; min-width: 200px;
         }
-
-        /* --- Video Section --- */
-        .video-container {
-            width: 100%;
-            border: 4px solid rgba(255,255,255,0.1);
-            background-color: #000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            line-height: 0;
-        }
+        .video-container { width: 100%; border: 4px solid rgba(255,255,255,0.1); background-color: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); line-height: 0; }
+        video { width: 100%; height: auto; display: block; }
         
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* --- Info List --- */
         .info-list { list-style: none; font-size: 1.05rem; }
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 8px;
-        }
-        .info-label {
-            font-family: var(--font-hand);
-            color: #ccc;
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-        }
-        .info-value { 
-            padding-left: 10px; 
-            font-weight: 700; 
-            font-size: 1.2rem;
-        }
+        .info-item { display: flex; flex-direction: column; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .info-label { font-family: var(--font-hand); color: #ccc; font-size: 1.1rem; margin-bottom: 4px; }
+        .info-value { padding-left: 10px; font-weight: 700; font-size: 1.2rem; }
 
-        /* --- Cards (Members & Staff) --- */
+        /* --- Cards (Members) --- */
         .grid-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
             list-style: none;
         }
-
-        .card-link {
-            display: block;
-            height: 100%;
-        }
-
+        
+        /* プリント風カードのベース */
         .card-box {
-            background-color: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 4px;
-            padding: 0;
-            text-align: center;
+            background-color: #fcfcfc;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.5);
+            position: relative;
+            border-radius: 2px;
+            height: auto;
+            padding-bottom: 15px;
             overflow: hidden;
-            transition: transform 0.2s, border-color 0.2s;
-            height: 100%;
+            transition: transform 0.2s;
         }
+        .card-box:hover { transform: translateY(-3px); }
 
-        .card-link:hover .card-box {
-            transform: translateY(-3px);
-            border-color: var(--gold-btn);
+        /* マグネット */
+        .card-box::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 14px;
+            border-radius: 3px;
+            box-shadow: 1px 2px 3px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.6);
+            z-index: 10;
+        }
+        .magnet-red::before { background-color: #e63946; }
+        .magnet-blue::before { background-color: #457b9d; }
+        .magnet-yellow::before { background-color: #e9c46a; }
+
+        /* コンビ名（プリント風） */
+        .combi-name-bar {
+            background-color: transparent;
+            color: #333;
+            font-family: var(--font-serif);
+            font-weight: bold;
+            font-size: 0.95rem;
+            padding: 30px 5px 8px;
+            border-bottom: 2px dashed #ccc;
+            text-align: center;
         }
 
         .card-img-box {
             width: 100%;
             aspect-ratio: 1 / 1;
-            background-color: #333;
+            background-color: #e0e0e0;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: rgba(255,255,255,0.2);
+            color: #888;
             font-size: 0.8rem;
-        }
-        
-        .card-info { padding: 15px 10px; }
-
-        .card-name {
-            font-family: var(--font-serif);
-            font-size: 1rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-        
-        .card-role {
-            font-size: 0.75rem;
-            color: #aaa;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .sns-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .sns-links i { color: var(--gold-btn); font-size: 1.1rem; }
-
-        /* --- Guidelines --- */
-        .guidelines-box {
-            background-color: rgba(0,0,0,0.2);
-            border: 2px solid rgba(255,255,255,0.1);
-            padding: 20px;
-            font-size: 0.9rem;
-        }
-        .guidelines-box ul { padding-left: 20px; margin-top: 10px; }
-        .guidelines-box li { margin-bottom: 5px; }
-
-        /* --- Map --- */
-        .map-wrapper {
-            border: 4px solid #fff;
-            line-height: 0;
-            background-color: #eee;
-        }
-
-        /* --- Footer --- */
-        footer {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 0.75rem;
-            opacity: 0.6;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 20px;
-        }
-
-        /* --- Sticky Ticket Button --- */
-        .sticky-ticket-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: var(--footer-height);
-            background: linear-gradient(to top, #111, rgba(17,17,17,0.95));
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 0 20px;
-        }
-
-        .btn-sticky {
-            display: block;
-            width: 100%;
-            max-width: 500px;
-            background: linear-gradient(135deg, #c5a84e 0%, #b4963c 100%);
-            color: #111;
-            text-align: center;
-            padding: 12px 0;
-            border-radius: 4px;
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: 1px solid #e0c870;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .btn-sticky:hover {
-            filter: brightness(1.1);
-            transform: translateY(-1px);
-        }
-        
-        .btn-sticky:active { transform: translateY(1px); }
-
-        /* --- 端末ごとの改行制御 --- */
-        .pc-br { display: none; }
-        
-        /* レスポンシブ調整（画面幅600px以上のPC/タブレット用） */
-        @media (min-width: 600px) {
-            .container { padding: 60px 50px; }
-            .info-item { flex-direction: row; align-items: baseline; }
-            .info-label { width: 100px; flex-shrink: 0; }
-            /* PCでのみ改行を表示 */
-            .pc-br { display: inline; }
-            /* PCではスマホ用の改行を非表示 */
-            .sp-br { display: none; }
-        }
-        /* --- コンビ用カードの追加スタイル --- */
-.combi-name-bar {
-            background-color: var(--accent-wood); /* 緑から木の枠の色（茶色）に変更して目立たせる */
-            color: #fff;
-            font-family: var(--font-serif);
-            font-weight: bold;
-            font-size: 0.95rem;
-            padding: 10px 5px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .member-details {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            padding: 15px 10px;
+            padding: 15px 10px 0;
         }
-
         .member-person {
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-bottom: 1px dashed rgba(255,255,255,0.2);
+            border-bottom: 1px dashed #ccc;
             padding-bottom: 10px;
         }
-
-        .member-person:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
+        .member-person:last-child { border-bottom: none; padding-bottom: 0; }
         .member-name {
             font-family: var(--font-serif);
             font-size: 0.9rem;
             font-weight: bold;
-            color: #fff;
+            color: #222;
             margin-bottom: 8px;
-            text-align: center;
             line-height: 1.3;
+            text-align: center;
         }
+        .member-pos { font-size: 0.7rem; color: #666; font-weight: normal; display: block; }
+        .sns-links a { color: #555; transition: color 0.2s, transform 0.2s; display: inline-block; margin: 0 5px; }
+        .sns-links a:hover { color: #000; transform: scale(1.1); }
 
-        .member-pos {
-            font-size: 0.7rem;
-            color: #aaa;
-            font-weight: normal;
-            display: block;
-        }
+        /* --- Staff Cards (Dark Theme) --- */
+        .staff-card { background-color: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding-bottom: 0; height: 100%; }
+        .staff-card::before { display: none; }
+        .staff-card .card-info { padding: 15px 10px; text-align: center; }
+        .staff-card .card-name { font-family: var(--font-serif); font-size: 1rem; font-weight: bold; display: block; margin-bottom: 8px; color: #fff; }
+        .staff-card .card-role { font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 8px; }
+        .staff-card .sns-links i { color: var(--gold-btn); font-size: 1.1rem; }
 
-        /* SNSアイコンをリンク化して押せるようにする */
-        .sns-links a {
-            color: var(--gold-btn);
-            transition: color 0.2s, transform 0.2s;
-            display: inline-block;
-        }
-        
-        .sns-links a:hover {
-            color: #fff;
-            transform: scale(1.1);
-        }
-        /* =========================================
-           追加デザイン：プリント風カード＆黒板アイテム
-           ========================================= */
-        /* ① カードを紙（プリント）っぽくする */
-        .card-box {
-            background-color: #fcfcfc !important; /* 温かみのある白（紙の色） */
-            border: none !important;
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.5) !important;
-            position: relative;
-            border-radius: 2px !important;
-        }
-        
-        /* ② マグネットの形（全色共通） */
-        .card-box::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 45px;
-            height: 8px;
-            border-radius: 4px;
-            box-shadow: 1px 2px 2px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5);
-            z-index: 10;
-        }
-        
-        /* ③ マグネットの色（クラスでランダムに変えられます） */
-        .magnet-red::before { background-color: #e63946; }
-        .magnet-blue::before { background-color: #457b9d; }
-        .magnet-yellow::before { background-color: #e9c46a; }
+        /* --- Guidelines & Map --- */
+        .guidelines-box { background-color: rgba(0,0,0,0.2); border: 2px solid rgba(255,255,255,0.1); padding: 20px; font-size: 0.9rem; }
+        .guidelines-box ul { padding-left: 20px; margin-top: 10px; }
+        .guidelines-box li { margin-bottom: 5px; }
+        .map-wrapper { border: 4px solid #fff; line-height: 0; background-color: #eee; }
 
-        /* ④ カード内の文字をプリント用の黒文字に変更 */
-        .combi-name-bar {
-            background-color: transparent !important;
-            color: #333 !important;
-            padding: 25px 5px 8px !important; /* マグネットの分、上の余白を広く */
-            border-bottom: 2px dashed #ccc !important;
-        }
-        .member-name { color: #222 !important; }
-        .member-pos { color: #666 !important; }
-        .sns-links a { color: #555 !important; }
-        .sns-links a:hover { color: #000 !important; }
-
-        /* ⑤ 黒板消しとチョーク（粉受けの上に乗せる設定） */
+        /* --- Footer & Chalk Items --- */
         .chalk-tray-items {
             position: absolute;
-            bottom: -22px; /* 粉受けの高さに合わせる */
+            bottom: -22px; 
             left: 0;
             width: 100%;
             height: 20px;
             z-index: 20;
             pointer-events: none;
         }
-        
         .eraser {
-            position: absolute;
-            bottom: 4px;
-            left: 8%; /* 左端のほう */
-            width: 45px;
-            height: 15px;
-            background: linear-gradient(to bottom, #e0e0e0 40%, #2b579a 40%); /* 白いフェルトと青い持ち手 */
-            border-radius: 2px;
-            box-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-            transform: rotate(-3deg);
+            position: absolute; bottom: 4px; left: 8%; width: 45px; height: 15px;
+            background: linear-gradient(to bottom, #e0e0e0 40%, #2b579a 40%); 
+            border-radius: 2px; box-shadow: 2px 2px 4px rgba(0,0,0,0.6); transform: rotate(-3deg);
         }
-        
         .chalk-white {
-            position: absolute;
-            bottom: 4px;
-            right: 15%; /* 右端のほう */
-            width: 22px;
-            height: 5px;
-            background-color: #fff;
-            border-radius: 3px;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            transform: rotate(15deg);
+            position: absolute; bottom: 4px; right: 15%; width: 22px; height: 5px;
+            background-color: #fff; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(15deg);
         }
-        
         .chalk-yellow {
-            position: absolute;
-            bottom: 2px;
-            right: 10%;
-            width: 16px;
-            height: 5px;
-            background-color: #f4d03f;
-            border-radius: 3px;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-            transform: rotate(-25deg);
+            position: absolute; bottom: 2px; right: 10%; width: 16px; height: 5px;
+            background-color: #f4d03f; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(-25deg);
+        }
+
+        footer { margin-top: 60px; text-align: center; font-size: 0.75rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
+
+        /* --- Sticky Ticket Bar --- */
+        .sticky-ticket-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--footer-height);
+            background: linear-gradient(to top, #111, rgba(17,17,17,0.95));
+            border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 0 20px;
+        }
+        .btn-sticky {
+            display: block; width: 100%; max-width: 500px; background: linear-gradient(135deg, #c5a84e 0%, #b4963c 100%);
+            color: #111; text-align: center; padding: 12px 0; border-radius: 4px; font-family: var(--font-serif);
+            font-size: 1.1rem; font-weight: bold; border: 1px solid #e0c870; box-shadow: 0 2px 10px rgba(0,0,0,0.5); transition: all 0.2s;
+        }
+        .btn-sticky:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .btn-sticky:active { transform: translateY(1px); }
+
+        /* --- レスポンシブ --- */
+        .pc-br { display: none; }
+        @media (min-width: 600px) {
+            .container { padding: 60px 50px; }
+            .info-item { flex-direction: row; align-items: baseline; }
+            .info-label { width: 100px; flex-shrink: 0; }
+            .pc-br { display: inline; }
+            .sp-br { display: none; }
         }
     </style>
 </head>
@@ -509,101 +325,17 @@
             </div>
         </header>
 
-<div class="main-visual hero-anim-container">
+        <div class="main-visual hero-anim-container">
             <div class="sakura-petal" style="left: 10%; animation-delay: 0s;"></div>
             <div class="sakura-petal" style="left: 30%; animation-delay: 2s;"></div>
             <div class="sakura-petal" style="left: 60%; animation-delay: 1s;"></div>
             <div class="sakura-petal" style="left: 80%; animation-delay: 3s;"></div>
             
-            <img src="./bg_base.png" alt="背景" class="hero-bg">
-            
-            <img src="./board.png" alt="黒板" class="hero-board">
-            
-            <img src="./title.png" alt="集団下校" class="hero-title">
-            
-            <img src="./stamp.png" alt="vol.2" class="hero-stamp">
+            <img src="./bg_base.png" alt="背景" class="hero-bg" onerror="this.style.display='none'">
+            <img src="./board.png" alt="黒板" class="hero-board" onerror="this.style.display='none'">
+            <img src="./title.png" alt="集団下校" class="hero-title" onerror="this.style.display='none'">
+            <img src="./stamp.png" alt="vol.2" class="hero-stamp" onerror="this.style.display='none'">
         </div>
-
-        <style>
-            .hero-anim-container {
-                position: relative;
-                width: 100%;
-                aspect-ratio: 3 / 4; /* フライヤーの縦横比に合わせて調整してください */
-                overflow: hidden;
-                margin-bottom: 40px;
-                border: 8px solid rgba(255,255,255,0.1);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-                background-color: #222; /* 画像読み込み前の仮背景 */
-            }
-
-            .hero-anim-container img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: auto;
-            }
-
-            /* ① 背景は最初から表示 */
-            .hero-bg {
-                z-index: 1;
-            }
-
-            /* ② 黒板のアニメーション（0秒〜0.5秒） */
-            .hero-board {
-                z-index: 2;
-                transform: translateY(-100%); /* 最初は画面外（上） */
-                animation: dropBoard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            }
-            @keyframes dropBoard {
-                to { transform: translateY(0); }
-            }
-
-            /* ③ 文字のアニメーション（0.5秒〜1.2秒） */
-            .hero-title {
-                z-index: 3;
-                opacity: 0;
-                transform: translateX(-5%);
-                animation: showTitle 0.6s ease-out 0.5s forwards;
-            }
-            @keyframes showTitle {
-                to { opacity: 1; transform: translateX(0); }
-            }
-
-            /* ④ ハンコのアニメーション（1.2秒〜1.5秒） */
-            .hero-stamp {
-                z-index: 4;
-                opacity: 0;
-                transform: scale(3) rotate(20deg); /* 最初はデカくて傾いている */
-                animation: pressStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
-            }
-            @keyframes pressStamp {
-                0% { opacity: 0; transform: scale(3) rotate(20deg); }
-                50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
-                100% { opacity: 1; transform: scale(1) rotate(-10deg); } /* バンッ！と元サイズに */
-            }
-
-            /* 桜の花びら（常時） */
-            .sakura-petal {
-                position: absolute;
-                top: -10%;
-                width: 12px;
-                height: 12px;
-                background-color: #ffb7c5;
-                border-radius: 50% 0 50% 50%;
-                transform: rotate(45deg);
-                z-index: 5;
-                animation: fall 5s linear infinite;
-                opacity: 0.8;
-            }
-            @keyframes fall {
-                0% { top: -10%; transform: translateX(0) rotate(45deg); opacity: 0; }
-                10% { opacity: 0.8; }
-                50% { transform: translateX(20px) rotate(90deg); }
-                90% { opacity: 0.8; }
-                100% { top: 110%; transform: translateX(-20px) rotate(135deg); opacity: 0; }
-            }
-        </style>
 
         <section id="movie">
             <h2 class="section-title">放送室</h2>
@@ -637,13 +369,10 @@
         <section id="member">
             <h2 class="section-title">出演者</h2>
             <div class="grid-list">
-                <div class="card-box">
-                  <div class="card-box magnet-red">
+                
+                <div class="card-box magnet-red">
                     <div class="combi-name-bar">ドゥドゥディダーダー</div>
-                    
-                    <div class="card-img-box" style="background-image: url('./310.jpg'); background-size: cover; background-position: center;">
-                    </div>
-                    
+                    <div class="card-img-box" style="background-image: url('./310.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">りゅーしょー伝説<span class="member-pos">（写真・左）</span></span>
@@ -652,7 +381,6 @@
                                 <a href="https://stand.fm/channels/6925f8938ddb67b39644a013" target="_blank" title="ラジオ (stand.fm)"><i class="fa-solid fa-radio"></i></a>
                             </div>
                         </div>
-                        
                         <div class="member-person">
                             <span class="member-name">坂口<span class="member-pos">（写真・右）</span></span>
                             <div class="sns-links">
@@ -663,72 +391,85 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-box">
+
+                <div class="card-box magnet-blue">
+                    <div class="combi-name-bar">エコ</div>
                     <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">エコ</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">準備中</span>
+                            <div class="sns-links">
+                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-box">
+
+                <div class="card-box magnet-yellow">
+                    <div class="combi-name-bar">フィッシュおさかな</div>
                     <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">フィッシュ<br class="pc-br">おさかな</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">準備中</span>
+                            <div class="sns-links">
+                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-box">
+
+                <div class="card-box magnet-red">
+                    <div class="combi-name-bar">ノースロード</div>
                     <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">ノースロード</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">準備中</span>
+                            <div class="sns-links">
+                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-box">
+
+                <div class="card-box magnet-blue">
+                    <div class="combi-name-bar">最大パルプ</div>
                     <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">最大パルプ</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">準備中</span>
+                            <div class="sns-links">
+                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-box">
+
+                <div class="card-box magnet-yellow">
+                    <div class="combi-name-bar">悪趣味な色彩のカエル</div>
                     <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">悪趣味な色彩のカエル</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">準備中</span>
+                            <div class="sns-links">
+                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-box">
+
+                <div class="card-box magnet-red">
+                    <div class="combi-name-bar">ファズ宮</div>
                     <div class="card-img-box">IMAGE</div>
-                    <div class="card-info">
-                        <span class="card-name">ファズ宮</span>
-                        <div class="sns-links">
-                            <i class="fa-solid fa-microphone"></i>
-                            <i class="fa-brands fa-x-twitter"></i>
-                            <i class="fa-brands fa-instagram"></i>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">準備中</span>
+                            <div class="sns-links">
+                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -736,7 +477,7 @@
             <h2 class="section-title">職員室</h2>
             <div class="grid-list">
                 <a href="https://tiget.net/users/1482915" target="_blank" class="card-link">
-                    <div class="card-box">
+                    <div class="card-box staff-card">
                         <div class="card-img-box" style="background-color: #2a2a2a;">
                             <i class="fa-solid fa-user-tie" style="font-size:2rem; color:#888;"></i>
                         </div>
@@ -751,7 +492,7 @@
                 </a>
                 
                 <a href="#" onclick="alert('公式ホームページは現在準備中です！'); return false;" class="card-link">
-                    <div class="card-box">
+                    <div class="card-box staff-card">
                         <div class="card-img-box" style="background-color: #2a2a2a;">
                             <i class="fa-solid fa-laptop-code" style="font-size:2rem; color:#888;"></i>
                         </div>
@@ -786,11 +527,13 @@
                 <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=池袋ムーブメントスタジオ&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
             </div>
         </section>
-<div class="chalk-tray-items">
+
+        <div class="chalk-tray-items">
             <div class="eraser"></div>
             <div class="chalk-yellow"></div>
             <div class="chalk-white"></div>
         </div>
+
         <footer>
             <p style="margin-bottom:10px;">© 2026 集団下校実行委員会</p>
         </footer>
