@@ -259,10 +259,17 @@
             background: linear-gradient(to bottom, #dcb889 40%, #2b579a 40%); 
             border-radius: 2px; box-shadow: 2px 2px 4px rgba(0,0,0,0.6); transform: rotate(-3deg);
         }
-        /* 黒板消しの黒い持ち手バンド（青い部分の上だけ） */
+          /* 黒板消しの黒い持ち手バンド（ベージュのフェルト側へ移動） */
         .eraser::after {
-            content: ''; position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
-            width: 8px; height: 60%; background-color: #222; box-shadow: 1px 0 1px rgba(0,0,0,0.2);
+            content: '';
+            position: absolute;
+            top: 0; /* 一番上（ベージュの端）からスタート */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px; /* バンドの太さ */
+            height: 40%; /* ベージュ部分の高さ（40%）に合わせる */
+            background-color: #222;
+            box-shadow: 1px 0 1px rgba(0,0,0,0.2);
         }
         
         .chalk-white {
@@ -387,15 +394,16 @@
                 <div class="card-box magnet-blue">
                     <div class="combi-name-bar">エコ</div>
                     <div class="card-img-box">宣材写真（準備中）</div>
-                    <div class="card-info member-details">
+                                       <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
                             <div class="sns-links">
-                                <a href="#"><i class="fa-solid fa-microphone"></i></a>
+                                <a href="https://x.com/le_f_e?s=20" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="card-box magnet-yellow">
                     <div class="combi-name-bar">フィッシュおさかな</div>
