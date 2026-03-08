@@ -402,6 +402,95 @@
             color: #fff;
             transform: scale(1.1);
         }
+        /* =========================================
+           追加デザイン：プリント風カード＆黒板アイテム
+           ========================================= */
+        /* ① カードを紙（プリント）っぽくする */
+        .card-box {
+            background-color: #fcfcfc !important; /* 温かみのある白（紙の色） */
+            border: none !important;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.5) !important;
+            position: relative;
+            border-radius: 2px !important;
+        }
+        
+        /* ② マグネットの形（全色共通） */
+        .card-box::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 8px;
+            border-radius: 4px;
+            box-shadow: 1px 2px 2px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5);
+            z-index: 10;
+        }
+        
+        /* ③ マグネットの色（クラスでランダムに変えられます） */
+        .magnet-red::before { background-color: #e63946; }
+        .magnet-blue::before { background-color: #457b9d; }
+        .magnet-yellow::before { background-color: #e9c46a; }
+
+        /* ④ カード内の文字をプリント用の黒文字に変更 */
+        .combi-name-bar {
+            background-color: transparent !important;
+            color: #333 !important;
+            padding: 25px 5px 8px !important; /* マグネットの分、上の余白を広く */
+            border-bottom: 2px dashed #ccc !important;
+        }
+        .member-name { color: #222 !important; }
+        .member-pos { color: #666 !important; }
+        .sns-links a { color: #555 !important; }
+        .sns-links a:hover { color: #000 !important; }
+
+        /* ⑤ 黒板消しとチョーク（粉受けの上に乗せる設定） */
+        .chalk-tray-items {
+            position: absolute;
+            bottom: -22px; /* 粉受けの高さに合わせる */
+            left: 0;
+            width: 100%;
+            height: 20px;
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        .eraser {
+            position: absolute;
+            bottom: 4px;
+            left: 8%; /* 左端のほう */
+            width: 45px;
+            height: 15px;
+            background: linear-gradient(to bottom, #e0e0e0 40%, #2b579a 40%); /* 白いフェルトと青い持ち手 */
+            border-radius: 2px;
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            transform: rotate(-3deg);
+        }
+        
+        .chalk-white {
+            position: absolute;
+            bottom: 4px;
+            right: 15%; /* 右端のほう */
+            width: 22px;
+            height: 5px;
+            background-color: #fff;
+            border-radius: 3px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            transform: rotate(15deg);
+        }
+        
+        .chalk-yellow {
+            position: absolute;
+            bottom: 2px;
+            right: 10%;
+            width: 16px;
+            height: 5px;
+            background-color: #f4d03f;
+            border-radius: 3px;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            transform: rotate(-25deg);
+        }
     </style>
 </head>
 <body>
@@ -549,6 +638,7 @@
             <h2 class="section-title">出演者</h2>
             <div class="grid-list">
                 <div class="card-box">
+                  <div class="card-box magnet-red">
                     <div class="combi-name-bar">ドゥドゥディダーダー</div>
                     
                     <div class="card-img-box" style="background-image: url('./310.jpg'); background-size: cover; background-position: center;">
@@ -696,7 +786,11 @@
                 <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?q=池袋ムーブメントスタジオ&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
             </div>
         </section>
-
+<div class="chalk-tray-items">
+            <div class="eraser"></div>
+            <div class="chalk-yellow"></div>
+            <div class="chalk-white"></div>
+        </div>
         <footer>
             <p style="margin-bottom:10px;">© 2026 集団下校実行委員会</p>
         </footer>
