@@ -19,7 +19,6 @@
             --text-chalk: #F0F0F0; 
             --logo-green: #3e6b42;
             --gold-btn: #b4963c;
-            --card-bg: #1a1a1a;
             --accent-wood: #8B5A2B;
             --font-hand: 'Yomogi', cursive;
             --font-serif: 'Kaisei Decol', serif;
@@ -156,7 +155,7 @@
         .info-label { font-family: var(--font-hand); color: #ccc; font-size: 1.1rem; margin-bottom: 4px; }
         .info-value { padding-left: 10px; font-weight: 700; font-size: 1.2rem; }
 
-        /* --- Cards (Members) --- */
+        /* --- Cards (プリント風のベース) --- */
         .grid-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -164,7 +163,6 @@
             list-style: none;
         }
         
-        /* プリント風カードのベース */
         .card-box {
             background-color: #fcfcfc;
             box-shadow: 2px 4px 8px rgba(0,0,0,0.5);
@@ -172,13 +170,12 @@
             border-radius: 2px;
             height: auto;
             padding-bottom: 15px;
-            overflow: hidden;
             transition: transform 0.2s;
         }
         .card-box:hover { transform: translateY(-3px); }
 
-        /* マグネット */
-        .card-box::before {
+        /* メンバー用マグネット（上部・横長） */
+        #member .card-box::before {
             content: '';
             position: absolute;
             top: 6px;
@@ -190,11 +187,27 @@
             box-shadow: 1px 2px 3px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.6);
             z-index: 10;
         }
-        .magnet-red::before { background-color: #e63946; }
-        .magnet-blue::before { background-color: #457b9d; }
-        .magnet-yellow::before { background-color: #e9c46a; }
 
-        /* コンビ名（プリント風） */
+        /* 職員室用マグネット（左右・丸型） */
+        #staff .card-box::before,
+        #staff .card-box::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            box-shadow: 1px 2px 2px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5);
+            z-index: 10;
+        }
+        #staff .card-box::before { top: 10px; left: 10px; }
+        #staff .card-box::after { top: 10px; right: 10px; }
+
+        /* マグネットの共通カラー */
+        .magnet-red::before, .magnet-red::after { background-color: #e63946; }
+        .magnet-blue::before, .magnet-blue::after { background-color: #457b9d; }
+        .magnet-yellow::before, .magnet-yellow::after { background-color: #e9c46a; }
+
+        /* プリント内のテキストと画像 */
         .combi-name-bar {
             background-color: transparent;
             color: #333;
@@ -205,7 +218,6 @@
             border-bottom: 2px dashed #ccc;
             text-align: center;
         }
-
         .card-img-box {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -216,41 +228,15 @@
             color: #888;
             font-size: 0.8rem;
         }
-
-        .member-details {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 15px 10px 0;
-        }
-        .member-person {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border-bottom: 1px dashed #ccc;
-            padding-bottom: 10px;
-        }
+        .member-details { display: flex; flex-direction: column; gap: 12px; padding: 15px 10px 0; }
+        .member-person { display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
         .member-person:last-child { border-bottom: none; padding-bottom: 0; }
-        .member-name {
-            font-family: var(--font-serif);
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: #222;
-            margin-bottom: 8px;
-            line-height: 1.3;
-            text-align: center;
-        }
+        .member-name { font-family: var(--font-serif); font-size: 0.9rem; font-weight: bold; color: #222; margin-bottom: 8px; line-height: 1.3; text-align: center; }
         .member-pos { font-size: 0.7rem; color: #666; font-weight: normal; display: block; }
+        
         .sns-links a { color: #555; transition: color 0.2s, transform 0.2s; display: inline-block; margin: 0 5px; }
         .sns-links a:hover { color: #000; transform: scale(1.1); }
-
-        /* --- Staff Cards (Dark Theme) --- */
-        .staff-card { background-color: var(--card-bg); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding-bottom: 0; height: 100%; }
-        .staff-card::before { display: none; }
-        .staff-card .card-info { padding: 15px 10px; text-align: center; }
-        .staff-card .card-name { font-family: var(--font-serif); font-size: 1rem; font-weight: bold; display: block; margin-bottom: 8px; color: #fff; }
-        .staff-card .card-role { font-size: 0.75rem; color: #aaa; display: block; margin-bottom: 8px; }
-        .staff-card .sns-links i { color: var(--gold-btn); font-size: 1.1rem; }
+        .sns-links i { font-size: 1.1rem; }
 
         /* --- Guidelines & Map --- */
         .guidelines-box { background-color: rgba(0,0,0,0.2); border: 2px solid rgba(255,255,255,0.1); padding: 20px; font-size: 0.9rem; }
@@ -268,23 +254,17 @@
             z-index: 20;
             pointer-events: none;
         }
-.eraser {
+        .eraser {
             position: absolute; bottom: 4px; left: 8%; width: 45px; height: 15px;
-            background: linear-gradient(to bottom, #dcb889 40%, #2b579a 40%); /* 白からベージュに変更 */
+            background: linear-gradient(to bottom, #dcb889 40%, #2b579a 40%); 
             border-radius: 2px; box-shadow: 2px 2px 4px rgba(0,0,0,0.6); transform: rotate(-3deg);
         }
-        /* 黒板消しの黒い持ち手バンドを追加 */
+        /* 黒板消しの黒い持ち手バンド（青い部分の上だけ） */
         .eraser::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 8px; /* バンドの太さ */
-            height: 100%;
-            background-color: #222;
-            box-shadow: 1px 0 2px rgba(0,0,0,0.4);
+            content: ''; position: absolute; top: 40%; left: 50%; transform: translateX(-50%);
+            width: 8px; height: 60%; background-color: #222; box-shadow: 1px 0 1px rgba(0,0,0,0.2);
         }
+        
         .chalk-white {
             position: absolute; bottom: 4px; right: 15%; width: 22px; height: 5px;
             background-color: #fff; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(15deg);
@@ -406,7 +386,7 @@
 
                 <div class="card-box magnet-blue">
                     <div class="combi-name-bar">エコ</div>
-                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-img-box">宣材写真（準備中）</div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
@@ -419,7 +399,7 @@
 
                 <div class="card-box magnet-yellow">
                     <div class="combi-name-bar">フィッシュおさかな</div>
-                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-img-box">宣材写真（準備中）</div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
@@ -432,7 +412,7 @@
 
                 <div class="card-box magnet-red">
                     <div class="combi-name-bar">ノースロード</div>
-                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-img-box">宣材写真（準備中）</div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
@@ -445,7 +425,7 @@
 
                 <div class="card-box magnet-blue">
                     <div class="combi-name-bar">最大パルプ</div>
-                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-img-box">宣材写真（準備中）</div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
@@ -458,7 +438,7 @@
 
                 <div class="card-box magnet-yellow">
                     <div class="combi-name-bar">悪趣味な色彩のカエル</div>
-                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-img-box">宣材写真（準備中）</div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
@@ -471,7 +451,7 @@
 
                 <div class="card-box magnet-red">
                     <div class="combi-name-bar">ファズ宮</div>
-                    <div class="card-img-box">IMAGE</div>
+                    <div class="card-img-box">宣材写真（準備中）</div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">準備中</span>
@@ -485,10 +465,9 @@
             </div>
         </section>
 
-<section id="staff">
+        <section id="staff">
             <h2 class="section-title">職員室</h2>
             <div class="grid-list">
-                
                 <a href="https://tiget.net/users/1482915" target="_blank" class="card-link">
                     <div class="card-box magnet-blue">
                         <div class="combi-name-bar" style="border-bottom: none; padding-bottom: 5px;">主催</div>
@@ -516,23 +495,6 @@
                         </div>
                     </div>
                 </a>
-                
-            </div>
-        </section>
-                <a href="#" onclick="alert('公式ホームページは現在準備中です！'); return false;" class="card-link">
-                    <div class="card-box magnet-yellow">
-                        <div class="combi-name-bar" style="border-bottom: none; padding-bottom: 5px;">Web制作</div>
-                        <div class="card-info member-details" style="padding-top: 5px;">
-                            <div class="member-person">
-                                <span class="member-name">関根</span>
-                                <div class="sns-links">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                
             </div>
         </section>
 
