@@ -297,10 +297,13 @@
         .btn-sticky:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .btn-sticky:active { transform: translateY(1px); }
 
-        /* --- レスポンシブ --- */
+/* --- レスポンシブ --- */
         .pc-br { display: none; }
         @media (min-width: 600px) {
-            .container { padding: 60px 50px; }
+            .container { 
+                max-width: 700px; /* ★ここを追加！PCの時だけ黒板を大きくする */
+                padding: 60px 50px; 
+            }
             .info-item { flex-direction: row; align-items: baseline; }
             .info-label { width: 100px; flex-shrink: 0; }
             .pc-br { display: inline; }
