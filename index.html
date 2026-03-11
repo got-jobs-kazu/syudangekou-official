@@ -142,11 +142,17 @@
 
         /* --- Sections & Info --- */
         section { margin-bottom: 50px; }
+        
+        /* 【修正】項目名（セクションタイトル）のデザイン */
         .section-title {
-            font-size: 1.8rem; text-align: center; margin-bottom: 30px;
-            padding-bottom: 10px; border-bottom: 2px dashed rgba(255,255,255,0.3);
-            display: inline-block; min-width: 200px;
+            font-size: 1.8rem; 
+            text-align: center; /* スマホは完全な中央揃え */
+            margin-bottom: 30px;
+            padding-bottom: 10px; 
+            border-bottom: 2px dashed rgba(255,255,255,0.3);
+            display: block; /* 点線を左右の端まで100%伸ばす */
         }
+        
         .video-container { width: 100%; border: 4px solid rgba(255,255,255,0.1); background-color: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); line-height: 0; }
         video { width: 100%; height: auto; display: block; }
         
@@ -174,13 +180,13 @@
         }
         .card-box:hover { transform: translateY(-3px); }
 
-        /* ▼ 新デザイン：立体マグネット＋白文字（所属タグ） ▼ */
+        /* ▼ 立体マグネット＋白文字（所属タグ） ▼ */
         .affiliation-tag {
             position: absolute;
             top: 6px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px; /* 【修正】ご要望に合わせて横幅を1.5倍に拡大！ */
+            width: 120px; 
             height: 20px; 
             border-radius: 3px;
             /* プラスチックらしいぷっくりとした立体感の影 */
@@ -304,7 +310,14 @@
         /* --- レスポンシブ --- */
         .pc-br { display: none; }
         @media (min-width: 600px) {
-            .container { padding: 60px 50px; }
+            .container { 
+                max-width: 700px; /* PCでの改行を防ぐため幅を広めに設定 */
+                padding: 60px 50px; 
+            }
+            /* 【修正】PCのときは左寄せ（従来通り）にする */
+            .section-title {
+                text-align: left;
+            }
             .info-item { flex-direction: row; align-items: baseline; }
             .info-label { width: 100px; flex-shrink: 0; }
             .pc-br { display: inline; }
