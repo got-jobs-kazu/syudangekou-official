@@ -207,6 +207,34 @@
         .magnet-blue::before, .magnet-blue::after { background-color: #457b9d; }
         .magnet-yellow::before, .magnet-yellow::after { background-color: #e9c46a; }
 
+        /* 所属タグ（ colored boundary + white centered text） */
+        .affiliation-tag {
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 18px; 
+            border-radius: 3px;
+            box-shadow: 1px 2px 3px rgba(0,0,0,0.4);
+            z-index: 10;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: #000; 
+            text-align: center;
+            font-family: var(--font-serif);
+            border: 1px solid rgba(0,0,0,0.1); 
+            box-sizing: border-box;
+        }
+
+        /* マグネットグラデーション設定（カードボックスの色クラスがタグの端っこだけに色をつける） */
+        #member .magnet-red .affiliation-tag { background-image: linear-gradient(to right, #e63946 12.5%, #fcfcfc 12.5% 87.5%, #e63946 87.5%); }
+        #member .magnet-blue .affiliation-tag { background-image: linear-gradient(to right, #457b9d 12.5%, #fcfcfc 12.5% 87.5%, #457b9d 87.5%); }
+        #member .magnet-yellow .affiliation-tag { background-image: linear-gradient(to right, #e9c46a 12.5%, #fcfcfc 12.5% 87.5%, #e9c46a 87.5%); }
+
         /* プリント内のテキストと画像 */
         .combi-name-bar {
             background-color: transparent;
@@ -395,10 +423,8 @@
             <div class="grid-list">
                 
                 <div class="card-box magnet-red">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">吉本興業</span>
-                        ドゥドゥディダーダー
-                    </div>
+                    <div class="affiliation-tag">吉本</div>
+                    <div class="combi-name-bar">ドゥドゥディダーダー</div>
                     <div class="card-img-box" style="background-image: url('./S__92733444_0.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
@@ -419,11 +445,9 @@
                     </div>
                 </div>
 
-                <div class="card-box magnet-red">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">吉本興業</span>
-                        エコ
-                    </div>
+                <div class="card-box magnet-blue">
+                    <div class="affiliation-tag">ワタナベ</div>
+                    <div class="combi-name-bar">エコ</div>
                     <div class="card-img-box" style="background-image: url('./S__92733445_0.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
@@ -444,16 +468,15 @@
                                 <a href="https://stand.fm/channels/67ef7dc587fe90ae1753dc3e" target="_blank" title="ラジオ (stand.fm)"><i class="fa-solid fa-radio"></i></a>
                                 <a href="https://www.youtube.com/@e.co.channel" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
                                 <a href="https://tiktok.com/@e.co.channel" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                                <a href="https://youtube.com/@高橋-gamechannel" target="_blank" title="YouTube (Game)"><i class="fa-solid fa-gamepad"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card-box magnet-red">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">吉本興業</span>
-                        フィッシュおさかな
-                    </div>
+                <div class="card-box magnet-yellow">
+                    <div class="affiliation-tag">人力舎</div>
+                    <div class="combi-name-bar">フィッシュおさかな</div>
                     <div class="card-img-box" style="background-image: url('./S__92733446_0.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
@@ -473,11 +496,30 @@
                     </div>
                 </div>
 
-                <div class="card-box magnet-yellow">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">人力舎</span>
-                        最大パルプ
+                <div class="card-box magnet-red">
+                    <div class="affiliation-tag">吉本</div>
+                    <div class="combi-name-bar">ノースロード</div>
+                    <div class="card-img-box" style="background-image: url('./S__92733447_0.jpg'); background-size: cover; background-position: center;"></div>
+                    <div class="card-info member-details">
+                        <div class="member-person">
+                            <span class="member-name">おきの<span class="member-pos">（写真・左）</span></span>
+                            <div class="sns-links">
+                                <a href="https://x.com/okinoooo" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="https://instagram.com/okinoooo" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-person">
+                            <span class="member-name">やまざき<span class="member-pos">（写真・右）</span></span>
+                            <div class="sns-links">
+                                <a href="https://x.com/yamayama" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="card-box magnet-blue">
+                    <div class="affiliation-tag">ワタナベ</div>
+                    <div class="combi-name-bar">最大パルプ</div>
                     <div class="card-img-box" style="background-image: url('./S__92733448_0.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
@@ -500,16 +542,14 @@
                 </div>
 
                 <div class="card-box magnet-yellow">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">人力舎</span>
-                        ファズ宮
-                    </div>
+                    <div class="affiliation-tag">人力舎</div>
+                    <div class="combi-name-bar">ファズ宮</div>
                     <div class="card-img-box" style="background-image: url('./S__92733449_0.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">花寺ビスク<span class="member-pos">（写真・左）</span></span>
                             <div class="sns-links">
-                                <a href="https://www.instagram.com/hanehane_138/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.instagram.com/zgg_miel/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                                 <a href="https://www.p-jinriki.com/talent/fazumiya/" target="_blank" title="公式ホームページ"><i class="fa-solid fa-link"></i></a>
                             </div>
                         </div>
@@ -523,18 +563,16 @@
                     </div>
                 </div>
 
-                <div class="card-box magnet-yellow">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">人力舎</span>
-                        悪趣味な色彩のカエル
-                    </div>
+                <div class="card-box magnet-red">
+                    <div class="affiliation-tag">吉本</div>
+                    <div class="combi-name-bar">悪趣味な色彩のカエル</div>
                     <div class="card-img-box" style="background-image: url('./S__92733450_0.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="card-info member-details">
                         <div class="member-person">
                             <span class="member-name">えじき<span class="member-pos">（写真・左）</span></span>
                             <div class="sns-links">
                                 <a href="https://www.instagram.com/khysf._" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="https://podcasts.apple.com/jp/podcast/%E6%82%AA%E8%B6%A3%E5%91%B3%E3%81%AA%E8%89%B2%E5%BD%A9%E3%81%AE%E3%82%AB%E3%82%A8%E3%83%AB%E3%81%AE%E3%81%AA%E3%81%8D%E3%81%94%E3%81%88/id1762659674" target="_blank" title="Podcast"><i class="fa-solid fa-podcast"></i></a>
+                                <a href="https://podcasts.apple.com/jp/podcast/id1762659674" target="_blank" title="Podcast"><i class="fa-solid fa-podcast"></i></a>
                                 <a href="https://www.youtube.com/@悪趣味な色彩のカエル" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
                                 <a href="https://www.p-jinriki.com/sp/talent/akushuminasikisaifrog/" target="_blank" title="公式ホームページ"><i class="fa-solid fa-link"></i></a>
                             </div>
@@ -544,33 +582,9 @@
                             <div class="sns-links">
                                 <a href="https://x.com/yuyu_rinchi6633" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
                                 <a href="https://www.instagram.com/hanehane_138/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                                <a href="https://podcasts.apple.com/jp/podcast/%E6%82%AA%E8%B6%A3%E5%91%B3%E3%81%AA%E8%89%B2%E5%BD%A9%E3%81%AE%E3%82%AB%E3%82%A8%E3%83%AB%E3%81%AE%E3%81%AA%E3%81%8D%E3%81%94%E3%81%88/id1762659674" target="_blank" title="Podcast"><i class="fa-solid fa-podcast"></i></a>
+                                <a href="https://podcasts.apple.com/jp/podcast/id1762659674" target="_blank" title="Podcast"><i class="fa-solid fa-podcast"></i></a>
                                 <a href="https://www.youtube.com/@悪趣味な色彩のカエル" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
                                 <a href="https://www.p-jinriki.com/sp/talent/akushuminasikisaifrog/" target="_blank" title="公式ホームページ"><i class="fa-solid fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-box magnet-blue">
-                    <div class="combi-name-bar">
-                        <span class="agency-label">ワタナベ</span>
-                        ノースロード
-                    </div>
-                    <div class="card-img-box" style="background-image: url('./S__92733447_0.jpg'); background-size: cover; background-position: center;"></div>
-                    <div class="card-info member-details">
-                        <div class="member-person">
-                            <span class="member-name">おきの<span class="member-pos">（写真・左）</span></span>
-                            <div class="sns-links">
-                                <a href="https://x.com/north_okino" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                                <a href="https://www.instagram.com/north_road_o/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="member-person">
-                            <span class="member-name">やまざき<span class="member-pos">（写真・右）</span></span>
-                            <div class="sns-links">
-                                <a href="https://x.com/north_road_y" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
-                                <a href="https://www.instagram.com/north_road_y" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
