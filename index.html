@@ -143,14 +143,14 @@
         /* --- Sections & Info --- */
         section { margin-bottom: 50px; }
         
-        /* 【修正】項目名（セクションタイトル）のデザイン */
+        /* 項目名（セクションタイトル）のデザイン：スマホは完全な中央揃え、点線を左右の端まで100%伸ばす */
         .section-title {
             font-size: 1.8rem; 
-            text-align: center; /* スマホは完全な中央揃え */
+            text-align: center; 
             margin-bottom: 30px;
             padding-bottom: 10px; 
             border-bottom: 2px dashed rgba(255,255,255,0.3);
-            display: block; /* 点線を左右の端まで100%伸ばす */
+            display: block; 
         }
         
         .video-container { width: 100%; border: 4px solid rgba(255,255,255,0.1); background-color: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); line-height: 0; }
@@ -186,7 +186,7 @@
             top: 6px;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px; 
+            width: 120px; /* マグネットの横幅を大きく（10:4.5の比率） */
             height: 20px; 
             border-radius: 3px;
             /* プラスチックらしいぷっくりとした立体感の影 */
@@ -314,7 +314,7 @@
                 max-width: 700px; /* PCでの改行を防ぐため幅を広めに設定 */
                 padding: 60px 50px; 
             }
-            /* 【修正】PCのときは左寄せ（従来通り）にする */
+            /* PCのときは左寄せ（従来通り）にする */
             .section-title {
                 text-align: left;
             }
@@ -358,7 +358,7 @@
             <p style="text-align: center; margin-bottom: 10px; font-size: 0.9rem;">第一回ダイジェスト映像</p>
             <div class="video-container">
                 <video controls preload="metadata" poster="https://placehold.co/640x360/000/FFF?text=Digest+Movie">
-                    <source src="./集団下校_ダイジェスト_vol1.mp4" type="video/mp4">
+                    <source src="./digest_movie.mp4" type="video/mp4">
                     <p>動画を再生するには、videoタグをサポートしたブラウザが必要です。</p>
                 </video>
             </div>
