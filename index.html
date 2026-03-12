@@ -39,7 +39,7 @@
 
         /* --- Layout Container (黒板) --- */
         .container {
-            max-width: 700px; /* PCでの改行を防ぐため幅を広めに設定 */
+            max-width: 700px;
             margin: 0 auto;
             background-color: var(--bg-board);
             border: 12px solid var(--accent-wood);
@@ -67,8 +67,6 @@
         a { text-decoration: none; transition: opacity 0.3s; }
         a:hover { opacity: 0.8; }
 
-        /* 【修正①】ヘッダー（ロゴ）は全て削除しました */
-
         /* --- Intro Text --- */
         .intro-text {
             text-align: center;
@@ -90,9 +88,10 @@
             aspect-ratio: 3 / 4;
             overflow: hidden;
             margin-bottom: 40px;
+            /* 【修正】黒背景をなくし、黒板の色と同化させました */
+            background-color: var(--bg-board);
             border: 8px solid rgba(255,255,255,0.1);
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            background-color: #222;
         }
         .hero-anim-container img { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
         .hero-bg { z-index: 1; }
@@ -100,16 +99,18 @@
         @keyframes dropBoard { to { transform: translateY(0); } }
         .hero-title { z-index: 3; opacity: 0; transform: translateX(-5%); animation: showTitle 0.6s ease-out 0.5s forwards; }
         @keyframes showTitle { to { opacity: 1; transform: translateX(0); } }
+        
         .hero-stamp {
             z-index: 4; opacity: 0; transform: scale(3) rotate(20deg);
             animation: pressStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
         }
-        /* 【修正②】ハンコの「着地位置」を少し下と右にずらしました */
+        /* PC用ハンコ位置 */
         @keyframes pressStamp {
             0% { opacity: 0; transform: scale(3) rotate(20deg); }
             50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
             100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(30px, 40px); }
         }
+        
         .sakura-petal {
             position: absolute; top: -10%; width: 12px; height: 12px;
             background-color: #ffb7c5; border-radius: 50% 0 50% 50%;
@@ -162,7 +163,6 @@
         }
         .card-box:hover { transform: translateY(-3px); }
 
-        /* ▼ 立体マグネット＋白文字（所属タグ） ▼ */
         .affiliation-tag {
             position: absolute;
             top: 6px;
@@ -188,7 +188,6 @@
         .magnet-blue .affiliation-tag { background-color: #457b9d; }
         .magnet-yellow .affiliation-tag { background-color: #e9c46a; }
 
-        /* 職員室用マグネット（左右・丸型） */
         #staff .card-box::before,
         #staff .card-box::after {
             content: '';
@@ -204,11 +203,10 @@
         #staff .magnet-blue::before, #staff .magnet-blue::after { background-color: #457b9d; }
         #staff .magnet-yellow::before, #staff .magnet-yellow::after { background-color: #e9c46a; }
 
-        /* プリント内のテキストと画像 */
         .combi-name-bar {
             background-color: transparent;
             color: #333;
-            font-family: var(--serif);
+            font-family: var(--font-serif);
             font-weight: bold;
             font-size: 0.95rem;
             padding: 30px 5px 8px;
@@ -240,39 +238,6 @@
         .guidelines-box ul { padding-left: 20px; margin-top: 10px; }
         .guidelines-box li { margin-bottom: 5px; }
         .map-wrapper { border: 4px solid #fff; line-height: 0; background-color: #eee; }
-
-        /* 【修正③】 Idea B: 公式Xのフローティングボタンのスタイル設定 */
-        .floating-x {
-            position: fixed;
-            bottom: 90px; /* 下部予約バーの少し上 */
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background-color: #fff;
-            color: #111;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            z-index: 1000;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-        }
-        .floating-x a {
-            color: #111;
-            font-size: 1.8rem;
-            display: block;
-            width: 100%;
-            height: 100%;
-            line-height: 50px;
-            text-decoration: none;
-        }
-        .floating-x:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-        }
 
         /* --- Footer & Chalk Items --- */
         .chalk-tray-items {
@@ -313,13 +278,42 @@
         }
         .btn-sticky {
             display: block; width: 100%; max-width: 500px; background: linear-gradient(135deg, #c5a84e 0%, #b4963c 100%);
-            color: #111; text-align: center; padding: 12px 0; border-radius: 4px; font-family: var(--serif);
+            color: #111; text-align: center; padding: 12px 0; border-radius: 4px; font-family: var(--font-serif);
             font-size: 1.1rem; font-weight: bold; border: 1px solid #e0c870; box-shadow: 0 2px 10px rgba(0,0,0,0.5); transition: all 0.2s;
         }
         .btn-sticky:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .btn-sticky:active { transform: translateY(1px); }
 
-        /* --- レスポンシブ --- */
+        /* 【修正】公式SNSサイドバーの基本設定 (PC用) */
+        .social-sidebar {
+            position: absolute; /* 黒板のコンテナを基準に配置 */
+            bottom: 60px;       /* 粉受けの少し上 */
+            right: -12px;       /* 木枠の右端にピッタリ合わせる */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1000;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background-color: #000; /* Xの黒色 */
+            color: #fff;
+            border-radius: 12px 0 0 12px; /* 左側だけ角丸（タブ風） */
+            box-shadow: -2px 2px 6px rgba(0,0,0,0.5);
+            font-size: 1.6rem;
+            text-decoration: none;
+            transition: transform 0.2s, width 0.2s;
+        }
+        .social-btn:hover {
+            width: 55px; /* ホバー時に少し伸びる遊び心 */
+            background-color: #222;
+        }
+
+        /* --- レスポンシブ (スマホ向け調整) --- */
         .pc-br { display: none; }
         @media (min-width: 600px) {
             .container { 
@@ -333,12 +327,36 @@
             .sp-br { display: none; }
         }
         
-        /* 【修正①】 スマホ縦画面でフライヤーを画面いっぱいにする */
         @media (max-width: 599px) {
             .hero-anim-container {
-                aspect-ratio: 9 / 16; /* 縦長にする */
+                aspect-ratio: 9 / 16; 
                 width: 100%;
-                height: 100vh; /* 画面の高さ100%に */
+                height: 100vh; 
+            }
+            
+            /* 【修正】スマホ専用のハンコ着地位置（上へずらして「校」に被らないように） */
+            .hero-stamp {
+                animation: pressStampSp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+            }
+            @keyframes pressStampSp {
+                0% { opacity: 0; transform: scale(3) rotate(20deg); }
+                50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
+                100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(10px, 15px); } /* 移動量を小さく */
+            }
+
+            /* 【修正】スマホ版の公式SNSサイドバー（スクロール検知用） */
+            .social-sidebar {
+                position: fixed; /* 画面に対して固定 */
+                bottom: 100px;   /* チケットボタンの上に避ける */
+                right: 0;
+                transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            }
+            .social-sidebar.is-hidden {
+                transform: translateX(70%); /* 右側にスッと隠れる */
+                opacity: 0.6;
+            }
+            .social-btn:hover {
+                width: 48px; /* スマホではホバー拡張オフ */
             }
         }
     </style>
@@ -346,6 +364,7 @@
 <body>
 
     <div class="container">
+
         <div class="main-visual hero-anim-container">
             <div class="sakura-petal" style="left: 10%; animation-delay: 0s;"></div>
             <div class="sakura-petal" style="left: 30%; animation-delay: 2s;"></div>
@@ -628,6 +647,12 @@
             <div class="chalk-white"></div>
         </div>
 
+        <div id="socialSidebar" class="social-sidebar">
+            <a href="https://x.com/shuudangekou1" target="_blank" class="social-btn x-btn" title="公式X (Twitter)">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            </div>
+
         <footer>
             <p style="margin-bottom:10px;">© 2026 集団下校実行委員会</p>
         </footer>
@@ -639,11 +664,36 @@
         </a>
     </div>
 
-    <div class="floating-x">
-        <a href="https://x.com/shuudangekou1" target="_blank">
-            <i class="fa-brands fa-x-twitter"></i>
-        </a>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let scrollTimeout;
+            const sidebar = document.getElementById('socialSidebar');
 
+            if (sidebar) {
+                // スクロール検知イベント
+                window.addEventListener('scroll', () => {
+                    if (window.innerWidth < 600) {
+                        // スクロール中は隠す
+                        sidebar.classList.add('is-hidden');
+                        
+                        // タイマーをリセット
+                        clearTimeout(scrollTimeout);
+                        
+                        // スクロールが止まって0.4秒後に再び表示
+                        scrollTimeout = setTimeout(() => {
+                            sidebar.classList.remove('is-hidden');
+                        }, 400); 
+                    }
+                });
+                
+                // 画面サイズが変わった時のリセット処理
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 600) {
+                        sidebar.classList.remove('is-hidden');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
