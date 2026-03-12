@@ -35,9 +35,102 @@
             padding: 20px 20px calc(var(--footer-height) + 40px) 20px;
             background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
             background-size: 20px 20px;
+            /* 初期状態はスクロール禁止（アニメーション後にJSで解除） */
+            overflow: hidden; 
+            height: 100vh;
         }
 
-        /* --- Layout Container (黒板) --- */
+        /* =======================================================
+           【新機能】 オープニングアニメーション用レイヤー
+           ======================================================= */
+        .opening-layer {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-board);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s, background-color 0.6s;
+        }
+        
+        .op-flyer {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            overflow: hidden;
+            transform-origin: center center;
+        }
+        @media(max-width: 599px) { .op-flyer { height: 100vh; } }
+        @media(min-width: 600px) { .op-flyer { aspect-ratio: 3/4; max-height: 90vh; box-shadow: 0 10px 30px rgba(0,0,0,0.8); } }
+
+        /* 画像共通設定 */
+        .op-flyer img { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
+        
+        /* 1. うっすらからスゥーッと背景表示 */
+        .op-bg { opacity: 0; animation: fadeInBg 1.5s ease-out forwards; }
+        @keyframes fadeInBg { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+        /* 初期非表示 */
+        .op-board { transform: translateY(-100%); }
+        .op-title { opacity: 0; transform: translateX(-5%); }
+        .op-stamp { opacity: 0; transform: scale(3) rotate(20deg); }
+
+        /* トリガー後のアニメーション */
+        .is-animating .op-board { animation: dropBoard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .is-animating .op-title { animation: showTitle 0.6s ease-out 0.5s forwards; }
+        .is-animating .op-stamp { animation: pressStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards; }
+        @media (max-width: 599px) {
+            .is-animating .op-stamp { animation: pressStampSp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards; }
+        }
+
+        @keyframes dropBoard { to { transform: translateY(0); } }
+        @keyframes showTitle { to { opacity: 1; transform: translateX(0); } }
+        @keyframes pressStamp {
+            0% { opacity: 0; transform: scale(3) rotate(20deg); }
+            50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(30px, 40px); }
+        }
+        @keyframes pressStampSp {
+            0% { opacity: 0; transform: scale(3) rotate(20deg); }
+            50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
+            100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(10px, 15px); }
+        }
+
+        /* ユーザーアクションを促す文字 */
+        .scroll-prompt {
+            position: absolute;
+            bottom: 40px;
+            color: #fff;
+            font-family: var(--font-serif);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            animation: bounce 2s infinite;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            transition: opacity 0.3s;
+        }
+        .is-animating .scroll-prompt { opacity: 0; pointer-events: none; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* ひらりひらりと縮小するアニメーション */
+        .opening-layer.is-shrinking {
+            background-color: transparent; /* 背景を抜いて黒板を見せる */
+            pointer-events: none;
+        }
+        .is-shrinking .op-flyer {
+            animation: paperFlutter 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        @keyframes paperFlutter {
+            0% { transform: scale(1) translateY(0) rotate(0); filter: brightness(1); opacity: 1; }
+            40% { transform: scale(0.85) translateY(20px) rotate(-3deg); filter: brightness(1.2); opacity: 0.9; }
+            100% { transform: scale(0.7) translateY(40px) rotate(2deg); filter: brightness(0.9); opacity: 0; }
+        }
+
+        /* =======================================================
+           本編（黒板コンテナ）のスタイル
+           ======================================================= */
         .container {
             max-width: 700px;
             margin: 0 auto;
@@ -47,9 +140,11 @@
             padding: 40px 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             position: relative;
+            opacity: 0; /* 最初は隠しておく */
+            transition: opacity 0.8s ease-in-out;
         }
+        .container.is-visible { opacity: 1; }
 
-        /* 黒板の粉受け */
         .container::after {
             content: '';
             display: block;
@@ -63,11 +158,6 @@
             box-shadow: 0 5px 10px rgba(0,0,0,0.5);
         }
 
-        h1, h2, h3 { font-family: var(--font-hand); font-weight: 400; }
-        a { text-decoration: none; transition: opacity 0.3s; }
-        a:hover { opacity: 0.8; }
-
-        /* --- Intro Text --- */
         .intro-text {
             text-align: center;
             font-size: 1.1rem;
@@ -81,35 +171,63 @@
             border-radius: 4px;
         }
 
-        /* --- Main Visual (Animation) --- */
+        /* --- 本編のフライヤー（着地位置） --- */
         .hero-anim-container {
             position: relative;
             width: 100%;
             aspect-ratio: 3 / 4;
             overflow: hidden;
             margin-bottom: 40px;
-            /* 【修正】黒背景をなくし、黒板の色と同化させました */
             background-color: var(--bg-board);
             border: 8px solid rgba(255,255,255,0.1);
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            /* 縮小レイヤーと入れ替わる時のフワッと着地感 */
+            opacity: 0;
+            transform: scale(1.05) translateY(-10px);
+            transition: opacity 0.5s ease-in, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
+        .container.is-visible .hero-anim-container {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
         .hero-anim-container img { position: absolute; top: 0; left: 0; width: 100%; height: auto; }
-        .hero-bg { z-index: 1; }
-        .hero-board { z-index: 2; transform: translateY(-100%); animation: dropBoard 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-        @keyframes dropBoard { to { transform: translateY(0); } }
-        .hero-title { z-index: 3; opacity: 0; transform: translateX(-5%); animation: showTitle 0.6s ease-out 0.5s forwards; }
-        @keyframes showTitle { to { opacity: 1; transform: translateX(0); } }
         
-        .hero-stamp {
-            z-index: 4; opacity: 0; transform: scale(3) rotate(20deg);
-            animation: pressStamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+        /* 本編の画像は完成形（アニメーション済）で配置 */
+        .final-state.hero-board { transform: translateY(0); }
+        .final-state.hero-title { opacity: 1; transform: translateX(0); }
+        .final-state.hero-stamp { opacity: 1; transform: scale(1) rotate(-10deg) translate(30px, 40px); }
+        @media (max-width: 599px) { .final-state.hero-stamp { transform: scale(1) rotate(-10deg) translate(10px, 15px); } }
+
+        /* --- 赤い丸マグネット（バシッ！） --- */
+        .flyer-magnet {
+            position: absolute;
+            top: 15px;
+            width: 24px; height: 24px;
+            background-color: #e63946; /* 吉本カラー（赤） */
+            border-radius: 50%;
+            box-shadow: 1px 3px 5px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.4);
+            z-index: 10;
+            opacity: 0;
+            transform: scale(3);
         }
-        /* PC用ハンコ位置 */
-        @keyframes pressStamp {
-            0% { opacity: 0; transform: scale(3) rotate(20deg); }
-            50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(30px, 40px); }
+        .flyer-magnet-left { left: 20px; }
+        .flyer-magnet-right { right: 20px; }
+
+        .container.is-magnet-attached .flyer-magnet {
+            animation: magnetAttach 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
+        .container.is-magnet-attached .flyer-magnet-right {
+            animation-delay: 0.15s; /* 右側は一瞬遅れてバシッと鳴らす */
+        }
+        @keyframes magnetAttach {
+            0% { opacity: 0; transform: scale(3) translateZ(50px); }
+            100% { opacity: 1; transform: scale(1) translateZ(0); }
+        }
+
+        /* 桜のアニメーション（マグネット固定後に開始） */
+        .sakura-container { opacity: 0; transition: opacity 1s; }
+        .container.is-magnet-attached .sakura-container { opacity: 1; }
         
         .sakura-petal {
             position: absolute; top: -10%; width: 12px; height: 12px;
@@ -126,109 +244,37 @@
 
         /* --- Sections & Info --- */
         section { margin-bottom: 50px; }
-        
-        .section-title {
-            font-size: 1.8rem; 
-            text-align: center; 
-            margin-bottom: 30px;
-            padding-bottom: 10px; 
-            border-bottom: 2px dashed rgba(255,255,255,0.3);
-            display: block; 
-        }
-        
+        .section-title { font-family: var(--font-hand); font-size: 1.8rem; text-align: center; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 2px dashed rgba(255,255,255,0.3); display: block; }
         .video-container { width: 100%; border: 4px solid rgba(255,255,255,0.1); background-color: #000; box-shadow: 0 4px 10px rgba(0,0,0,0.5); line-height: 0; }
         video { width: 100%; height: auto; display: block; }
-        
         .info-list { list-style: none; font-size: 1.05rem; }
         .info-item { display: flex; flex-direction: column; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .info-label { font-family: var(--font-hand); color: #ccc; font-size: 1.1rem; margin-bottom: 4px; }
         .info-value { padding-left: 10px; font-weight: 700; font-size: 1.2rem; }
 
         /* --- Cards (プリント風のベース) --- */
-        .grid-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
-            list-style: none;
-        }
-        
-        .card-box {
-            background-color: #fcfcfc;
-            box-shadow: 2px 4px 8px rgba(0,0,0,0.5);
-            position: relative;
-            border-radius: 2px;
-            height: auto;
-            padding-bottom: 15px;
-            transition: transform 0.2s;
-        }
+        .grid-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; list-style: none; }
+        .card-box { background-color: #fcfcfc; box-shadow: 2px 4px 8px rgba(0,0,0,0.5); position: relative; border-radius: 2px; height: auto; padding-bottom: 15px; transition: transform 0.2s; }
         .card-box:hover { transform: translateY(-3px); }
 
-        .affiliation-tag {
-            position: absolute;
-            top: 6px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px; 
-            height: 20px; 
-            border-radius: 3px;
-            box-shadow: 1px 3px 4px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.4), inset 0 -2px 2px rgba(0,0,0,0.2);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: #fff; 
-            text-shadow: 0 1px 1px rgba(0,0,0,0.5); 
-            letter-spacing: 2px;
-            font-family: sans-serif; 
-        }
-        
+        .affiliation-tag { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border-radius: 3px; box-shadow: 1px 3px 4px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.4), inset 0 -2px 2px rgba(0,0,0,0.2); z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.5); letter-spacing: 2px; font-family: sans-serif; }
         .magnet-red .affiliation-tag { background-color: #e63946; }
         .magnet-blue .affiliation-tag { background-color: #457b9d; }
         .magnet-yellow .affiliation-tag { background-color: #e9c46a; }
 
-        #staff .card-box::before,
-        #staff .card-box::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            box-shadow: 1px 2px 2px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5);
-            z-index: 10;
-        }
+        #staff .card-box::before, #staff .card-box::after { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; box-shadow: 1px 2px 2px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.5); z-index: 10; }
         #staff .card-box::before { top: 10px; left: 10px; }
         #staff .card-box::after { top: 10px; right: 10px; }
         #staff .magnet-blue::before, #staff .magnet-blue::after { background-color: #457b9d; }
         #staff .magnet-yellow::before, #staff .magnet-yellow::after { background-color: #e9c46a; }
 
-        .combi-name-bar {
-            background-color: transparent;
-            color: #333;
-            font-family: var(--font-serif);
-            font-weight: bold;
-            font-size: 0.95rem;
-            padding: 30px 5px 8px;
-            border-bottom: 2px dashed #ccc;
-            text-align: center;
-        }
-        .card-img-box {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background-color: #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 0.8rem;
-        }
+        .combi-name-bar { background-color: transparent; color: #333; font-family: var(--font-serif); font-weight: bold; font-size: 0.95rem; padding: 30px 5px 8px; border-bottom: 2px dashed #ccc; text-align: center; }
+        .card-img-box { width: 100%; aspect-ratio: 1 / 1; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.8rem; }
         .member-details { display: flex; flex-direction: column; gap: 12px; padding: 15px 10px 0; }
         .member-person { display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
         .member-person:last-child { border-bottom: none; padding-bottom: 0; }
         .member-name { font-family: var(--font-serif); font-size: 0.9rem; font-weight: bold; color: #222; margin-bottom: 8px; line-height: 1.3; text-align: center; }
         .member-pos { font-size: 0.7rem; color: #666; font-weight: normal; display: block; }
-        
         .sns-links a { color: #555; transition: color 0.2s, transform 0.2s; display: inline-block; margin: 0 5px; }
         .sns-links a:hover { color: #000; transform: scale(1.1); }
         .sns-links i { font-size: 1.1rem; }
@@ -240,141 +286,74 @@
         .map-wrapper { border: 4px solid #fff; line-height: 0; background-color: #eee; }
 
         /* --- Footer & Chalk Items --- */
-        .chalk-tray-items {
-            position: absolute;
-            bottom: -22px; 
-            left: 0;
-            width: 100%;
-            height: 20px;
-            z-index: 20;
-            pointer-events: none;
-        }
-        .eraser {
-            position: absolute; bottom: 4px; left: 8%; width: 45px; height: 15px;
-            background: linear-gradient(to bottom, #dcb889 40%, #2b579a 40%); 
-            border-radius: 2px; box-shadow: 2px 2px 4px rgba(0,0,0,0.6); transform: rotate(-3deg);
-        }
-        .eraser::after {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 8px; height: 40%; background-color: #222; box-shadow: 1px 0 1px rgba(0,0,0,0.2);
-        }
-        
-        .chalk-white {
-            position: absolute; bottom: 4px; right: 15%; width: 22px; height: 5px;
-            background-color: #fff; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(15deg);
-        }
-        .chalk-yellow {
-            position: absolute; bottom: 2px; right: 10%; width: 16px; height: 5px;
-            background-color: #f4d03f; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(-25deg);
-        }
+        .chalk-tray-items { position: absolute; bottom: -22px; left: 0; width: 100%; height: 20px; z-index: 20; pointer-events: none; }
+        .eraser { position: absolute; bottom: 4px; left: 8%; width: 45px; height: 15px; background: linear-gradient(to bottom, #dcb889 40%, #2b579a 40%); border-radius: 2px; box-shadow: 2px 2px 4px rgba(0,0,0,0.6); transform: rotate(-3deg); }
+        .eraser::after { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 8px; height: 40%; background-color: #222; box-shadow: 1px 0 1px rgba(0,0,0,0.2); }
+        .chalk-white { position: absolute; bottom: 4px; right: 15%; width: 22px; height: 5px; background-color: #fff; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(15deg); }
+        .chalk-yellow { position: absolute; bottom: 2px; right: 10%; width: 16px; height: 5px; background-color: #f4d03f; border-radius: 3px; box-shadow: 1px 1px 3px rgba(0,0,0,0.5); transform: rotate(-25deg); }
 
         footer { margin-top: 60px; text-align: center; font-size: 0.75rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
         /* --- Sticky Ticket Bar --- */
-        .sticky-ticket-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--footer-height);
-            background: linear-gradient(to top, #111, rgba(17,17,17,0.95));
-            border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 0 20px;
-        }
-        .btn-sticky {
-            display: block; width: 100%; max-width: 500px; background: linear-gradient(135deg, #c5a84e 0%, #b4963c 100%);
-            color: #111; text-align: center; padding: 12px 0; border-radius: 4px; font-family: var(--font-serif);
-            font-size: 1.1rem; font-weight: bold; border: 1px solid #e0c870; box-shadow: 0 2px 10px rgba(0,0,0,0.5); transition: all 0.2s;
-        }
+        .sticky-ticket-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--footer-height); background: linear-gradient(to top, #111, rgba(17,17,17,0.95)); border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 0 20px; }
+        .btn-sticky { display: block; width: 100%; max-width: 500px; background: linear-gradient(135deg, #c5a84e 0%, #b4963c 100%); color: #111; text-align: center; padding: 12px 0; border-radius: 4px; font-family: var(--font-serif); font-size: 1.1rem; font-weight: bold; border: 1px solid #e0c870; box-shadow: 0 2px 10px rgba(0,0,0,0.5); transition: all 0.2s; }
         .btn-sticky:hover { filter: brightness(1.1); transform: translateY(-1px); }
         .btn-sticky:active { transform: translateY(1px); }
 
-        /* 【修正】公式SNSサイドバーの基本設定 (PC用) */
-        .social-sidebar {
-            position: absolute; /* 黒板のコンテナを基準に配置 */
-            bottom: 60px;       /* 粉受けの少し上 */
-            right: -12px;       /* 木枠の右端にピッタリ合わせる */
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            z-index: 1000;
-        }
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            background-color: #000; /* Xの黒色 */
-            color: #fff;
-            border-radius: 12px 0 0 12px; /* 左側だけ角丸（タブ風） */
-            box-shadow: -2px 2px 6px rgba(0,0,0,0.5);
-            font-size: 1.6rem;
-            text-decoration: none;
-            transition: transform 0.2s, width 0.2s;
-        }
-        .social-btn:hover {
-            width: 55px; /* ホバー時に少し伸びる遊び心 */
-            background-color: #222;
-        }
+        /* 公式SNSサイドバー */
+        .social-sidebar { position: absolute; bottom: 60px; right: -12px; display: flex; flex-direction: column; gap: 8px; z-index: 1000; }
+        .social-btn { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background-color: #000; color: #fff; border-radius: 12px 0 0 12px; box-shadow: -2px 2px 6px rgba(0,0,0,0.5); font-size: 1.6rem; text-decoration: none; transition: transform 0.2s, width 0.2s; }
+        .social-btn:hover { width: 55px; background-color: #222; }
 
-        /* --- レスポンシブ (スマホ向け調整) --- */
+        /* --- レスポンシブ --- */
         .pc-br { display: none; }
         @media (min-width: 600px) {
-            .container { 
-                max-width: 700px; 
-                padding: 60px 50px; 
-            }
+            .container { padding: 60px 50px; }
             .section-title { text-align: left; }
             .info-item { flex-direction: row; align-items: baseline; }
             .info-label { width: 100px; flex-shrink: 0; }
             .pc-br { display: inline; }
             .sp-br { display: none; }
         }
-        
         @media (max-width: 599px) {
-            .hero-anim-container {
-                aspect-ratio: 9 / 16; 
-                width: 100%;
-                height: 100vh; 
-            }
-            
-            /* 【修正】スマホ専用のハンコ着地位置（上へずらして「校」に被らないように） */
-            .hero-stamp {
-                animation: pressStampSp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
-            }
-            @keyframes pressStampSp {
-                0% { opacity: 0; transform: scale(3) rotate(20deg); }
-                50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
-                100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(10px, 15px); } /* 移動量を小さく */
-            }
-
-            /* 【修正】スマホ版の公式SNSサイドバー（スクロール検知用） */
-            .social-sidebar {
-                position: fixed; /* 画面に対して固定 */
-                bottom: 100px;   /* チケットボタンの上に避ける */
-                right: 0;
-                transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-            }
-            .social-sidebar.is-hidden {
-                transform: translateX(70%); /* 右側にスッと隠れる */
-                opacity: 0.6;
-            }
-            .social-btn:hover {
-                width: 48px; /* スマホではホバー拡張オフ */
-            }
+            .social-sidebar { position: fixed; bottom: 100px; right: 0; transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+            .social-sidebar.is-hidden { transform: translateX(70%); opacity: 0.6; }
+            .social-btn:hover { width: 48px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div id="opening-layer" class="opening-layer">
+        <div class="op-flyer">
+            <img src="./bg_base.jpg" class="op-bg" alt="背景">
+            <img src="./board.png" class="op-board" alt="黒板">
+            <img src="./title.png" class="op-title" alt="タイトル">
+            <img src="./stamp.png" class="op-stamp" alt="ハンコ">
+        </div>
+        <div class="scroll-prompt">
+            <span>Scroll or Tap to Start</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </div>
 
-        <div class="main-visual hero-anim-container">
-            <div class="sakura-petal" style="left: 10%; animation-delay: 0s;"></div>
-            <div class="sakura-petal" style="left: 30%; animation-delay: 2s;"></div>
-            <div class="sakura-petal" style="left: 60%; animation-delay: 1s;"></div>
-            <div class="sakura-petal" style="left: 80%; animation-delay: 3s;"></div>
+    <div class="container" id="main-board">
+
+        <div class="main-visual hero-anim-container final-flyer">
+            <div class="flyer-magnet flyer-magnet-left"></div>
+            <div class="flyer-magnet flyer-magnet-right"></div>
             
-            <img src="./bg_base.jpg" alt="背景" class="hero-bg" onerror="this.style.display='none'">
-            <img src="./board.png" alt="黒板" class="hero-board" onerror="this.style.display='none'">
-            <img src="./title.png" alt="集団下校" class="hero-title" onerror="this.style.display='none'">
-            <img src="./stamp.png" alt="vol.2" class="hero-stamp" onerror="this.style.display='none'">
+            <div class="sakura-container">
+                <div class="sakura-petal" style="left: 10%; animation-delay: 0s;"></div>
+                <div class="sakura-petal" style="left: 30%; animation-delay: 2s;"></div>
+                <div class="sakura-petal" style="left: 60%; animation-delay: 1s;"></div>
+                <div class="sakura-petal" style="left: 80%; animation-delay: 3s;"></div>
+            </div>
+            
+            <img src="./bg_base.jpg" class="hero-bg" style="opacity: 1;">
+            <img src="./board.png" class="hero-board final-state">
+            <img src="./title.png" class="hero-title final-state">
+            <img src="./stamp.png" class="hero-stamp final-state">
         </div>
 
         <div class="intro-text">
@@ -651,7 +630,7 @@
             <a href="https://x.com/shuudangekou1" target="_blank" class="social-btn x-btn" title="公式X (Twitter)">
                 <i class="fa-brands fa-x-twitter"></i>
             </a>
-            </div>
+        </div>
 
         <footer>
             <p style="margin-bottom:10px;">© 2026 集団下校実行委員会</p>
@@ -666,27 +645,64 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const openingLayer = document.getElementById('opening-layer');
+            const mainBoard = document.getElementById('main-board');
+            let hasStarted = false;
+
+            // アニメーションを開始する関数
+            const startAnimation = () => {
+                if (hasStarted) return;
+                hasStarted = true;
+
+                // スクロールを促すサインを消し、ストン・ドーンのアニメーション開始
+                openingLayer.classList.add('is-animating');
+
+                // 1.8秒後（ハンコが終わった頃）にヒラヒラ縮小＆黒板フェードイン開始
+                setTimeout(() => {
+                    openingLayer.classList.add('is-shrinking');
+                    mainBoard.classList.add('is-visible');
+                    
+                    // アニメーション中はスクロールさせない
+                    document.body.style.overflow = 'hidden';
+                }, 1800);
+
+                // 3.0秒後（着地完了時）にマグネットをバシッ！と打つ ＆ スクロール解放
+                setTimeout(() => {
+                    mainBoard.classList.add('is-magnet-attached');
+                    document.body.style.overflow = ''; // スクロールできるように戻す
+                    
+                    // 役割を終えたオープニングレイヤーを完全に隠す（クリックの邪魔にならないように）
+                    setTimeout(() => {
+                        openingLayer.style.display = 'none';
+                    }, 1000);
+                }, 3000);
+            };
+
+            // ユーザーがアクション（スクロール、タップ等）をした瞬間にアニメーション開始
+            const triggerEvents = ['scroll', 'touchstart', 'click', 'wheel'];
+            triggerEvents.forEach(ev => {
+                window.addEventListener(ev, startAnimation, { once: true });
+            });
+
+            // --------------------------------------------------
+            // スマホ版公式SNSサイドバーの隠し制御（既存機能）
+            // --------------------------------------------------
             let scrollTimeout;
             const sidebar = document.getElementById('socialSidebar');
 
             if (sidebar) {
-                // スクロール検知イベント
                 window.addEventListener('scroll', () => {
-                    if (window.innerWidth < 600) {
-                        // スクロール中は隠す
-                        sidebar.classList.add('is-hidden');
-                        
-                        // タイマーをリセット
-                        clearTimeout(scrollTimeout);
-                        
-                        // スクロールが止まって0.4秒後に再び表示
-                        scrollTimeout = setTimeout(() => {
-                            sidebar.classList.remove('is-hidden');
-                        }, 400); 
-                    }
+                    // オープニング中は動かさない
+                    if (!hasStarted || window.innerWidth >= 600) return;
+
+                    sidebar.classList.add('is-hidden');
+                    clearTimeout(scrollTimeout);
+                    
+                    scrollTimeout = setTimeout(() => {
+                        sidebar.classList.remove('is-hidden');
+                    }, 400); 
                 });
                 
-                // 画面サイズが変わった時のリセット処理
                 window.addEventListener('resize', () => {
                     if (window.innerWidth >= 600) {
                         sidebar.classList.remove('is-hidden');
