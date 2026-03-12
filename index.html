@@ -35,13 +35,16 @@
             padding: 20px 20px calc(var(--footer-height) + 40px) 20px;
             background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
             background-size: 20px 20px;
-            /* 初期状態はスクロール禁止（アニメーション後にJSで解除） */
-            overflow: hidden; 
+        }
+
+        /* 【修正】 オープニング中のスクロールロック用クラス */
+        body.is-locked {
+            overflow: hidden;
             height: 100vh;
         }
 
         /* =======================================================
-           【新機能】 オープニングアニメーション用レイヤー
+           オープニングアニメーション用レイヤー
            ======================================================= */
         .opening-layer {
             position: fixed;
@@ -116,7 +119,7 @@
 
         /* ひらりひらりと縮小するアニメーション */
         .opening-layer.is-shrinking {
-            background-color: transparent; /* 背景を抜いて黒板を見せる */
+            background-color: transparent; 
             pointer-events: none;
         }
         .is-shrinking .op-flyer {
@@ -140,7 +143,7 @@
             padding: 40px 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             position: relative;
-            opacity: 0; /* 最初は隠しておく */
+            opacity: 0; 
             transition: opacity 0.8s ease-in-out;
         }
         .container.is-visible { opacity: 1; }
@@ -175,7 +178,7 @@
         .hero-anim-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 3 / 4; /* 【修正】スマホでも比率を維持して余白を防ぐ */
             overflow: hidden;
             margin-bottom: 40px;
             background-color: var(--bg-board);
@@ -199,11 +202,11 @@
         .final-state.hero-stamp { opacity: 1; transform: scale(1) rotate(-10deg) translate(30px, 40px); }
         @media (max-width: 599px) { .final-state.hero-stamp { transform: scale(1) rotate(-10deg) translate(10px, 15px); } }
 
-        /* --- 赤い丸マグネット（バシッ！） --- */
+        /* 【修正】赤い丸マグネット（バシッ！）のサイズと位置調整 */
         .flyer-magnet {
             position: absolute;
-            top: 15px;
-            width: 24px; height: 24px;
+            top: 10px;
+            width: 20px; height: 20px;
             background-color: #e63946; /* 吉本カラー（赤） */
             border-radius: 50%;
             box-shadow: 1px 3px 5px rgba(0,0,0,0.6), inset 0 2px 2px rgba(255,255,255,0.4);
@@ -211,8 +214,8 @@
             opacity: 0;
             transform: scale(3);
         }
-        .flyer-magnet-left { left: 20px; }
-        .flyer-magnet-right { right: 20px; }
+        .flyer-magnet-left { left: 12px; }
+        .flyer-magnet-right { right: 12px; }
 
         .container.is-magnet-attached .flyer-magnet {
             animation: magnetAttach 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
@@ -314,15 +317,31 @@
             .info-label { width: 100px; flex-shrink: 0; }
             .pc-br { display: inline; }
             .sp-br { display: none; }
+            
+            /* 【修正】PC用のマグネットサイズと位置 */
+            .flyer-magnet { top: 15px; width: 24px; height: 24px; }
+            .flyer-magnet-left { left: 20px; }
+            .flyer-magnet-right { right: 20px; }
         }
+        
         @media (max-width: 599px) {
+            /* スマホ専用のハンコ着地位置 */
+            .hero-stamp {
+                animation: pressStampSp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards;
+            }
+            @keyframes pressStampSp {
+                0% { opacity: 0; transform: scale(3) rotate(20deg); }
+                50% { opacity: 1; transform: scale(0.9) rotate(-5deg); }
+                100% { opacity: 1; transform: scale(1) rotate(-10deg) translate(10px, 15px); } 
+            }
+
             .social-sidebar { position: fixed; bottom: 100px; right: 0; transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
             .social-sidebar.is-hidden { transform: translateX(70%); opacity: 0.6; }
             .social-btn:hover { width: 48px; }
         }
     </style>
 </head>
-<body>
+<body class="is-locked">
 
     <div id="opening-layer" class="opening-layer">
         <div class="op-flyer">
@@ -654,45 +673,40 @@
                 if (hasStarted) return;
                 hasStarted = true;
 
-                // スクロールを促すサインを消し、ストン・ドーンのアニメーション開始
                 openingLayer.classList.add('is-animating');
 
-                // 1.8秒後（ハンコが終わった頃）にヒラヒラ縮小＆黒板フェードイン開始
                 setTimeout(() => {
                     openingLayer.classList.add('is-shrinking');
                     mainBoard.classList.add('is-visible');
-                    
-                    // アニメーション中はスクロールさせない
-                    document.body.style.overflow = 'hidden';
                 }, 1800);
 
-                // 3.0秒後（着地完了時）にマグネットをバシッ！と打つ ＆ スクロール解放
+                // 3.0秒後（着地完了時）にマグネットをバシッ！と打つ ＆ 【修正】スクロールロック解除！
                 setTimeout(() => {
                     mainBoard.classList.add('is-magnet-attached');
-                    document.body.style.overflow = ''; // スクロールできるように戻す
                     
-                    // 役割を終えたオープニングレイヤーを完全に隠す（クリックの邪魔にならないように）
+                    // 【修正】bodyタグについている is-locked クラスを消して、スクロールを復活させる
+                    document.body.classList.remove('is-locked'); 
+                    
                     setTimeout(() => {
                         openingLayer.style.display = 'none';
                     }, 1000);
                 }, 3000);
             };
 
-            // ユーザーがアクション（スクロール、タップ等）をした瞬間にアニメーション開始
-            const triggerEvents = ['scroll', 'touchstart', 'click', 'wheel'];
+            // 【修正】タッチして動かそうとした瞬間（touchmove）もトリガーに追加！
+            const triggerEvents = ['scroll', 'touchstart', 'touchmove', 'click', 'wheel'];
             triggerEvents.forEach(ev => {
                 window.addEventListener(ev, startAnimation, { once: true });
             });
 
             // --------------------------------------------------
-            // スマホ版公式SNSサイドバーの隠し制御（既存機能）
+            // スマホ版公式SNSサイドバーの隠し制御
             // --------------------------------------------------
             let scrollTimeout;
             const sidebar = document.getElementById('socialSidebar');
 
             if (sidebar) {
                 window.addEventListener('scroll', () => {
-                    // オープニング中は動かさない
                     if (!hasStarted || window.innerWidth >= 600) return;
 
                     sidebar.classList.add('is-hidden');
