@@ -117,7 +117,6 @@
             content: ''; display: block; width: calc(100% + 24px); height: 18px; background-color: var(--accent-wood); position: absolute; bottom: -24px; left: -12px; border-radius: 2px; box-shadow: 0 5px 10px rgba(0,0,0,0.5);
         }
 
-        /* 【修正5】 イントロテキストにチョークっぽさを追加 */
         .intro-text {
             text-align: center;
             font-size: 1.15rem;
@@ -130,7 +129,7 @@
             background-color: rgba(0,0,0,0.1);
             border-radius: 4px;
             color: #F0F0F0;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.4), 0 0 4px rgba(255,255,255,0.2); /* チョークの粉っぽさ */
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.4), 0 0 4px rgba(255,255,255,0.2); 
         }
 
         /* --- 本編のフライヤー --- */
@@ -188,21 +187,9 @@
         .card-box { background-color: #fcfcfc; box-shadow: 2px 4px 8px rgba(0,0,0,0.5); position: relative; border-radius: 2px; height: auto; padding-bottom: 15px; transition: transform 0.2s; }
         .card-box:hover { transform: translateY(-3px); }
 
-        /* =======================================================
-           【修正4】 マグネット文字のフォント比較用
-           （現在パターンAが有効。BやCにしたい場合はコメントを外してAを消す）
-           ======================================================= */
         .affiliation-tag { 
             position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border-radius: 3px; box-shadow: 1px 3px 4px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.4), inset 0 -2px 2px rgba(0,0,0,0.2); z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.5); letter-spacing: 2px; 
-            
-            /* パターンA: M PLUS Rounded 1c (丸みがあってポップ) ★現在これ★ */
             font-family: 'M PLUS Rounded 1c', sans-serif;
-            
-            /* パターンB: 太めの手書き風ゴシック (Zen Kaku Gothic New) */
-            /* font-family: 'Zen Kaku Gothic New', sans-serif; */
-            
-            /* パターンC: 印字のズレ演出 (文字を少し斜めに) */
-            /* font-family: 'Zen Kaku Gothic New', sans-serif; transform: translateX(-50%) rotate(-2deg); */
         }
         
         .magnet-red .affiliation-tag { background-color: #e63946; }
@@ -218,9 +205,8 @@
         .combi-name-bar { background-color: transparent; color: #333; font-family: var(--font-serif); font-weight: bold; font-size: 0.95rem; padding: 30px 5px 8px; border-bottom: 2px dashed #ccc; text-align: center; }
         .card-img-box { width: 100%; aspect-ratio: 1 / 1; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.8rem; }
         
-        /* 【修正3】 出演者カードの抜け感（余白の拡大） */
-        .member-details { display: flex; flex-direction: column; gap: 16px; /* gapを広げた */ padding: 15px 10px 0; }
-        .member-person { display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed #ccc; padding-bottom: 15px; /* 下部余白を広げた */ }
+        .member-details { display: flex; flex-direction: column; gap: 16px; padding: 15px 10px 0; }
+        .member-person { display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed #ccc; padding-bottom: 15px; }
         .member-person:last-child { border-bottom: none; padding-bottom: 0; }
         .member-name { font-family: var(--font-serif); font-size: 0.9rem; font-weight: bold; color: #222; margin-bottom: 10px; line-height: 1.3; text-align: center; }
         
@@ -245,17 +231,16 @@
         footer { margin-top: 60px; text-align: center; font-size: 0.75rem; opacity: 0.6; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; }
 
         /* =======================================================
-           【修正2】 チケット予約ボタンのチョーク風デザイン
+           チケット予約ボタンのチョーク風デザイン
            ======================================================= */
         .sticky-ticket-bar { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--footer-height); background: linear-gradient(to top, #111, rgba(17,17,17,0.95)); border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 0 20px; }
         .btn-sticky { 
             display: block; width: 100%; max-width: 500px; 
-            background-color: #f4d03f; /* 温かみのあるチョークイエロー */
-            color: #1a3c2c; /* 黒板の濃い緑（黒文字より馴染む） */
+            background-color: #f4d03f; 
+            color: #1a3c2c; 
             text-align: center; padding: 12px 0; border-radius: 4px; 
-            font-family: sans-serif; /* 太めのゴシック体で力強く */
+            font-family: sans-serif; 
             font-size: 1.15rem; font-weight: 900; letter-spacing: 1px;
-            /* チョークの粉っぽさを少し影で演出 */
             box-shadow: 0 2px 10px rgba(0,0,0,0.5), inset 0 2px 0 rgba(255,255,255,0.5); 
             transition: all 0.2s; 
         }
@@ -279,7 +264,7 @@
             .flyer-magnet { top: 15px; width: 24px; height: 24px; }
             .flyer-magnet-left { left: 20px; }
             .flyer-magnet-right { right: 20px; }
-            .intro-text { font-size: 1.25rem; } /* PCでは少し文字を大きく */
+            .intro-text { font-size: 1.25rem; } 
         }
         @media (max-width: 599px) {
             .hero-stamp { animation: pressStampSp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.2s forwards; }
@@ -573,10 +558,10 @@
             <div class="guidelines-box">
                 <ul>
                     <li>客席内でのお食事は禁止です。水分補給のみ可能です。</li>
-                    <li>OPとEDのみ写真撮影可能です。（フラッシュ、シャッター音はNG）</li>
+                    <li>OPとED、コーナー中は写真撮影可能です。（フラッシュ、シャッター音はNG）</li>
                     <li>ネタ中の撮影・録音は禁止です。</li>
                     <li>入場はQRコード提示が必要です。事前にご準備ください。</li>
-                    <li>差し入れは受付横のボックスへお願いします。</li>
+                    <li>差し入れがある場合は、開演前に受付スタッフにお預けください。</li>
                 </ul>
             </div>
         </section>
@@ -617,15 +602,12 @@
             const mainBoard = document.getElementById('main-board');
             let hasStarted = false;
 
-            // session storage をチェックして、2回目以降ならスキップ
             if (sessionStorage.getItem('hasSeenOpening')) {
-                // スキップ処理
                 openingLayer.style.display = 'none';
                 mainBoard.classList.add('is-visible', 'is-magnet-attached');
                 document.body.classList.remove('is-locked');
-                hasStarted = true; // サイドバーのJSエラー回避のため
+                hasStarted = true; 
             } else {
-                // 初回アクセスの処理（アニメーション設定）
                 const startAnimation = () => {
                     if (hasStarted) return;
                     hasStarted = true;
@@ -641,7 +623,6 @@
                         mainBoard.classList.add('is-magnet-attached');
                         document.body.classList.remove('is-locked'); 
                         
-                        // アニメーション完了を記録（次回からスキップ）
                         sessionStorage.setItem('hasSeenOpening', 'true');
                         
                         setTimeout(() => {
@@ -656,9 +637,7 @@
                 });
             }
 
-            // --------------------------------------------------
             // スマホ版公式SNSサイドバーの隠し制御
-            // --------------------------------------------------
             let scrollTimeout;
             const sidebar = document.getElementById('socialSidebar');
 
