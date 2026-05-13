@@ -98,10 +98,11 @@
         .sns-links i { font-size: 1.1rem; }
 
         /* === カルーセル共通 === */
-        .carousel-wrapper { width: 100%; max-width: 600px; margin: 0 auto; position: relative; overflow: hidden; }
+        .carousel-wrapper { width: 100%; max-width: 600px; margin: 0 auto; position: relative; overflow: visible !important; }
         .carousel-nav { position: absolute; top: 45%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #fff; border: 2px solid rgba(255,255,255,0.3); width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10; font-size: 1.2rem; transition: all 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
         .carousel-nav:hover { background: #E6C445; color: #111; border-color: #E6C445; transform: translateY(-50%) scale(1.1); }
-        .carousel-nav.prev { left: 5px; } .carousel-nav.next { right: 5px; }
+        /* ★変更：放送室（動画）などの基本ボタンを外側に広げ、はみ出しを許可 */
+        .carousel-nav.prev { left: -25px; } .carousel-nav.next { right: -25px; }
         .carousel-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
         .carousel-container::-webkit-scrollbar { display: none; }
         .carousel-slide { flex: 0 0 100%; scroll-snap-align: center; box-sizing: border-box; }
@@ -125,11 +126,42 @@
         #closeVideoBtn { position: absolute; top: -15px; right: -15px; background-color: #e63946; color: #fff; border: 2px solid #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.5); z-index: 5002; }
 
         /* === 掲示板 === */
+        /* ★変更：スマホの画面幅に合わせて文字を自動縮小（clamp）し、絶対にはみ出さず左右対称にする */
+        .catchphrase { text-align: center; color: #f4d03f; margin-bottom: 20px; font-size: clamp(0.6rem, 3.5vw, 0.85rem); font-weight: bold; letter-spacing: -0.5px; white-space: nowrap; width: 100%; display: block; overflow: hidden; }
+        .text-pc { display: none; }
+        .text-sp { display: inline; }
+
         .vol-buttons-wrapper { display: flex; overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
         .vol-buttons-wrapper::-webkit-scrollbar { display: none; }
         .vol-buttons { display: flex; gap: 10px; margin: 0 auto; }
-        .vol-btn { background: #3E6B42; color: #fff; border: 2px solid #fff; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Yomogi', cursive; font-size: 1.2rem; box-shadow: 2px 4px 6px rgba(0,0,0,0.5); transition: all 0.2s; flex-shrink: 0; }
-        .vol-btn:hover { background: #fff; color: #2E5D4B; transform: translateY(-2px); }
+        /* ★ 変更：ボタンをポスター風のデザインに刷新 ★ */
+        .vol-btn { 
+            width: 145px; /* ★変更：スマホ版ポスター横幅を1.2倍にサイズアップ */
+            aspect-ratio: 1 / 1.4; /* フライヤーに近い比率 */
+            background: #2E5D4B; 
+            border: 3px solid #eee; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            box-shadow: 2px 5px 10px rgba(0,0,0,0.6); 
+            transition: all 0.2s; 
+            flex-shrink: 0; 
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+        }
+        .vol-btn:hover { transform: scale(1.05) rotate(2deg); z-index: 10; border-color: #f4d03f; }
+        
+        /* ポスター内の画像 */
+        .vol-poster-img { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 画像がない場合のvolテキスト */
+        .vol-poster-noimg { 
+            display: flex; align-items: center; justify-content: center; 
+            height: 100%; color: #fff; font-family: 'Yomogi', cursive; font-size: 1.2rem; 
+        }
+
+        /* エピソード画面の文字調整 */
+        .flyer-episode-text { text-align: left; font-size: 0.95rem; line-height: 1.6; margin-top: 15px; color: #333; }
         .notice-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; justify-content: center; align-items: center; }
         .overlay-bg { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); }
         .notice-close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
@@ -139,6 +171,29 @@
         .notice-card .detail { white-space: pre-wrap; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
         .notice-link { display: block !important; text-align: center !important; background-color: #f4d03f !important; color: #1a3c2c !important; text-decoration: none !important; padding: 14px 20px !important; border-radius: 8px !important; font-size: 1.1rem !important; font-weight: 900 !important; box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 -3px 0 rgba(0,0,0,0.1) !important; transition: transform 0.1s !important; }
         .notice-link:active { transform: translateY(2px) !important; box-shadow: 0 2px 3px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.1) !important; }
+
+        /* ▼ 追加：モーダル内のボタン位置を広げ、重なりを防ぐ ▼ */
+        #notice-overlay .carousel-wrapper { overflow: visible !important; }
+        #noticePrev { left: -30px !important; z-index: 200 !important; }
+        #noticeNext { right: -30px !important; z-index: 200 !important; }
+        
+        /* ★追加：モーダル内の「●○○」を画面下部に固定して確実に見せる */
+        #noticeIndicators { position: fixed !important; bottom: 20px !important; left: 0 !important; width: 100% !important; z-index: 10005 !important; margin: 0 !important; pointer-events: none; }
+        
+        /* ★追加：モーダル内の縦スクロール用スタイル */
+        .notice-scroll-area { flex-grow: 1; overflow-y: auto; overflow-x: hidden; padding-right: 5px; margin-top: 5px; }
+        .notice-scroll-area::-webkit-scrollbar { width: 6px; }
+        .notice-scroll-area::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 3px; }
+        .notice-scroll-area::-webkit-scrollbar-thumb { background: rgba(46, 93, 75, 0.6); border-radius: 3px; }
+
+        @media (max-width: 599px) {
+            #noticePrev { left: -10px !important; }
+            #noticeNext { right: -10px !important; }
+            /* ★変更：スマホのモーダルを上にずらし、はみ出ないように高さを制限 */
+            #notice-overlay .carousel-wrapper { margin-top: -5vh !important; }
+            .notice-card { max-width: 82% !important; max-height: 68vh !important; margin: 0 auto !important; }
+            .notice-close-btn { font-size: 35px !important; top: 15px !important; right: 15px !important; }
+        }
 
         /* === 職員室 === */
         .staff-card { background-color: #fcfcfc; box-shadow: 2px 4px 8px rgba(0,0,0,0.5); position: relative; border-radius: 2px; padding: 25px 10px 20px; text-decoration: none; display: block; color: #222; text-align: center; transition: transform 0.2s; }
@@ -170,7 +225,7 @@
 
         @media (min-width: 600px) { .container { padding: 60px 50px; } .info-item { flex-direction: row; align-items: baseline; } .info-label { width: 100px; flex-shrink: 0; } .intro-text { font-size: 1.25rem; } .btn-sticky { max-width: 700px; font-size: 1.4rem; padding: 15px 0; } }
 
-        .hamburger-btn { position: fixed; top: 15px; right: 15px; z-index: 4000 !important; background-color: transparent; color: #ffffff; border: none; font-size: 2rem; cursor: pointer; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5)); transition: transform 0.3s ease, color 0.3s ease; }
+        .hamburger-btn { position: fixed; top: 15px; right: 15px; z-index: 4000 !important; background-color: transparent; color: #ffffff; border: none; font-size: 2rem; cursor: pointer; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5)); transition: transform 0.3s ease, color 0.3s ease, right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .hamburger-btn.is-active { color: #ffffff; transform: rotate(90deg) scale(1.1); filter: none; }
         .nav-menu { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.7); z-index: 3000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
         .nav-menu.is-active { display: flex !important; opacity: 1 !important; }
@@ -193,9 +248,10 @@
         @media (max-width: 599px) { .tt-desc { font-size: 0.9rem; white-space: nowrap; letter-spacing: -0.5px; } }
 
         /* === 相談チャット === */
-        .custom-chat-btn { position: fixed; bottom: 90px; right: 15px; width: 70px; height: 70px; background: #F0F0F0; color: #2E5D4B; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 2000; transition: transform 0.3s; border: 2px solid #ccc; font-weight: bold; }
+        .custom-chat-btn { position: fixed; bottom: 90px; right: 15px; width: 70px; height: 70px; background: #F0F0F0; color: #2E5D4B; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 2000; transition: transform 0.3s, right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 2px solid #ccc; font-weight: bold; }
         .custom-chat-btn span { font-size: 0.7rem; margin-top: 2px; }
-        .custom-chat-window { position: fixed; bottom: 100px; right: 20px; width: 350px; height: 500px; max-width: 90vw; max-height: 70vh; background-color: #f9f9f9; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; flex-direction: column; z-index: 2001; border: 2px solid #2E5D4B; overflow: hidden; }
+        /* ★変更：チャットウィンドウのz-indexをハンバーガー(4000)より上の 4501 に引き上げ */
+        .custom-chat-window { position: fixed; bottom: 100px; right: 20px; width: 350px; height: 500px; max-width: 90vw; max-height: 70vh; background-color: #f9f9f9; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; flex-direction: column; z-index: 4501; border: 2px solid #2E5D4B; overflow: hidden; }
         .custom-chat-window.is-open { display: flex; }
         .chat-header { background-color: #2E5D4B; color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
         .chat-close-btn { background: none; border: none; color: #fff; cursor: pointer; font-size: 1.2rem; }
@@ -206,6 +262,13 @@
         .chat-input-area { padding: 10px; background-color: #fff; border-top: 1px solid #ccc; display: flex; gap: 10px; }
         .chat-input { flex: 1; padding: 10px 15px; border: 1px solid #ccc; border-radius: 20px; font-size: 0.95rem; outline: none; }
         .chat-send-btn { background-color: #2E5D4B; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; }
+
+        /* ★追加：相談チャットの「入力中（ローディング）」アニメーション */
+        .typing-indicator { display: flex; gap: 6px; justify-content: center; align-items: center; padding: 14px 18px !important; min-width: 60px; }
+        .typing-indicator span { display: block; width: 8px; height: 8px; background-color: #888; border-radius: 50%; animation: typingBounce 1.4s infinite ease-in-out both; }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typingBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
         .timetable-btn { background-color: #8B5A2B !important; color: #fff !important; border: 2px solid #5c3a1a !important; padding: 10px 30px !important; font-size: 1.2rem !important; border-radius: 5px !important; cursor: pointer !important; display: inline-block !important; margin-top: 20px !important; box-shadow: 0 4px 8px rgba(0,0,0,0.5) !important; text-decoration: none !important; }
 
@@ -243,8 +306,13 @@
         }
 
         /* === 公式Xボタン（スマホ・共通） === */
-        #socialSidebar { position: fixed; bottom: 220px; right: 0; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
+        #socialSidebar { position: fixed; bottom: 220px; right: 0; display: flex; flex-direction: column; gap: 10px; z-index: 1000; transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .social-btn { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background-color: #000; color: #fff; border-radius: 12px 0 0 12px; font-size: 1.6rem; text-decoration: none; box-shadow: -2px 2px 5px rgba(0,0,0,0.5); transition: transform 0.2s, background-color 0.2s; }
+
+        /* ★変更：アニメーションで隠すのはスマホのみ（PCは常時表示） */
+        @media (max-width: 767px) {
+            .is-hidden-ui { right: -120px !important; }
+        }
 
         /* === PC版専用の調整（Xボタン復活 ＆ 相談ボタン・チャット拡大） === */
         @media (min-width: 768px) {
@@ -315,15 +383,38 @@
             .notebook-paper a { font-size: 1.5rem !important; }
 
             /* ② 掲示板ポップアップの全体的なサイズアップ */
-            .notice-card { max-width: 750px !important; padding: 50px !important; border-width: 6px !important; border-radius: 20px !important; }
-            .notice-card .combi-name { font-size: 1.2rem !important; padding: 8px 20px !important; border-width: 3px !important; margin-bottom: 20px !important; }
-            .notice-card h3 { font-size: 2.2rem !important; margin-bottom: 25px !important; padding-bottom: 15px !important; border-bottom-width: 3px !important; }
-            .notice-card .detail { font-size: 1.3rem !important; line-height: 1.8 !important; margin-bottom: 40px !important; }
-            .notice-link { font-size: 1.4rem !important; padding: 20px 40px !important; max-width: 350px !important; border-radius: 12px !important; }
+            .notice-card { max-width: 1000px !important; padding: 40px 60px !important; border-width: 8px !important; border-radius: 24px !important; height: auto; max-height: 85vh; }
+            .notice-card .combi-name { font-size: 1.4rem !important; padding: 10px 25px !important; border-width: 4px !important; margin-bottom: 25px !important; }
+            .notice-card h3 { font-size: 2.8rem !important; margin-bottom: 20px !important; padding-bottom: 15px !important; border-bottom-width: 4px !important; line-height: 1.2 !important; }
+            .notice-card .detail { font-size: 1.6rem !important; line-height: 1.8 !important; margin-bottom: 20px !important; }
+            .notice-link { font-size: 1.8rem !important; padding: 20px 60px !important; max-width: 550px !important; border-radius: 16px !important; }
             
-            /* 掲示板の「閉じる(✕)」ボタンとスライダーの「＜ ＞」矢印も大きく */
-            .notice-close-btn { font-size: 60px !important; top: 30px !important; right: 40px !important; }
-            .carousel-nav { width: 60px !important; height: 60px !important; font-size: 1.8rem !important; }
+            /* 放送室のボタンもPCではさらに大きく外側へ */
+            #videoPrev { left: -80px !important; width: 70px !important; height: 70px !important; font-size: 2rem !important; }
+            #videoNext { right: -80px !important; width: 70px !important; height: 70px !important; font-size: 2rem !important; }
+
+            /* ポップアップ内のボタンとスライダー矢印 */
+            .notice-close-btn { font-size: 70px !important; top: 30px !important; right: 40px !important; }
+            #noticePrev { left: -100px !important; width: 90px !important; height: 90px !important; font-size: 3rem !important; }
+            #noticeNext { right: -100px !important; width: 90px !important; height: 90px !important; font-size: 3rem !important; }
+            
+            /* ★追加：PC版のフライヤー内テキストサイズを大幅アップ */
+            .flyer-pc-title { font-size: 2.5rem !important; margin-bottom: 15px !important; padding-bottom: 10px !important; }
+            .flyer-episode-text { font-size: 1.6rem !important; line-height: 1.8 !important; }
+            .flyer-pc-btn { font-size: 1.8rem !important; padding: 25px 50px !important; }
+
+            /* ★掲示板ポスター（フライヤーボタン）のサイズ */
+            .vol-btn { width: 400px !important; border-width: 5px !important; } 
+            .vol-poster-noimg { font-size: 4rem !important; }
+
+            /* ★掲示板のメイン「＜」「＞」ボタン（黒板上）をさらに外側へ */
+            #volPrev { left: -120px !important; width: 90px !important; height: 90px !important; font-size: 3rem !important; }
+            #volNext { right: -120px !important; width: 90px !important; height: 90px !important; font-size: 3rem !important; }
+
+            /* ★追加：PC版のキャッチコピー表示切り替えとサイズアップ */
+            .text-pc { display: inline !important; }
+            .text-sp { display: none !important; }
+            .catchphrase { font-size: 1.4rem !important; letter-spacing: 1px !important; margin-bottom: 30px !important; }
         }
     </style>
 </head>
@@ -480,15 +571,19 @@
 <span id="MEMBERS_END"></span>
         </section>
 
-        <section id="notice-board">
+       <section id="notice-board">
             <h2 class="section-title">掲示板</h2>
-            <p style="text-align: center; color: #F0F0F0; margin-bottom: 20px;">演者からのお知らせをチェック！</p>
-            <div class="vol-buttons-wrapper">
-                <div class="vol-buttons">
-                    <button class="vol-btn" onclick="openNotice('vol.1')">vol.1</button>
-                    <button class="vol-btn" onclick="openNotice('vol.2')">vol.2</button>
-                    <button class="vol-btn" onclick="openNotice('vol.3')">vol.3</button>
-                </div>
+            <p class="catchphrase">
+                <span class="text-sp">＼ タップして裏話＆告知をチェック！ ／</span><span class="text-pc">＼ クリックして裏話＆告知をチェック！ ／</span>
+            </p>
+            
+            <div class="carousel-wrapper" style="padding-bottom: 10px; overflow: visible; padding: 0 10px;">
+                <button class="carousel-nav prev" id="volPrev" style="left: -30px; width: 40px; height: 40px; font-size: 1.2rem; z-index: 200;"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="carousel-container" id="dynamic-vol-buttons" style="gap: 25px; padding: 5px; max-width: max-content; margin: 0 auto;">
+                    </div>
+                <button class="carousel-nav next" id="volNext" style="right: -30px; width: 40px; height: 40px; font-size: 1.2rem; z-index: 200;"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="carousel-indicators" id="volIndicators" style="margin-top: 15px;">
+                    </div>
             </div>
         </section>
 
@@ -539,7 +634,7 @@
     <div id="socialSidebar" class="social-sidebar"><a href="https://x.com/shuudangekou1" target="_blank" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a></div>
     <div class="sticky-ticket-bar"><a href="https://tiget.net/events/486821" class="btn-sticky" target="_blank">TIGETで予約する (¥1,500)</a></div>
 
-    <div id="chat-overlay" class="modal-overlay" style="z-index: 2000;"></div>
+    <div id="chat-overlay" class="modal-overlay" style="z-index: 4500;"></div>
     <div id="custom-chat-btn" class="custom-chat-btn"><i class="fa-solid fa-comment-dots"></i><span>相談する</span></div>
     <div id="custom-chat-window" class="custom-chat-window">
         <div class="chat-header"><span>集団下校AIスタッフ</span><button id="chat-close-btn" class="chat-close-btn"><i class="fa-solid fa-xmark"></i></button></div>
@@ -552,9 +647,9 @@
         <button class="notice-close-btn" onclick="closeNotice()">✕</button>
         
         <div class="carousel-wrapper" style="width: 100%; position: relative; z-index: 10001; margin-top: 10vh;">
-            <button class="carousel-nav prev" id="noticePrev" style="left: 10px;"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="carousel-nav prev" id="noticePrev"><i class="fa-solid fa-chevron-left"></i></button>
             <div id="notice-slider-container" class="carousel-container"></div>
-            <button class="carousel-nav next" id="noticeNext" style="right: 10px;"><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="carousel-nav next" id="noticeNext"><i class="fa-solid fa-chevron-right"></i></button>
             <div class="carousel-indicators" id="noticeIndicators" style="margin-top: 20px;"></div>
         </div>
     </div>
@@ -586,7 +681,7 @@
     </div>
 
     <script id="NOTICE_DATA">
-const notices = [["vol.1","ドゥドゥディダーダー","","",""],["vol.1","エコ","","",""],["vol.1","フィッシュおさかな","","",""],["vol.1","最大パルプ","","",""],["vol.1","ファズ宮","","",""],["vol.1","悪趣味な色彩のカエル","","",""],["vol.1","ノースロード","","",""],["vol.2","ドゥドゥディダーダー","集団下校の公式X開設！！","集団下校に関する最新情報や\nオフショットなどを配信📸","https://x.com/shuudangekou1"],["vol.2","エコノート","コンビ名を改名","「エコ」から「エコノート」に改名！",""],["vol.2","フィッシュおさかな","","",""],["vol.2","最大パルプ","","",""],["vol.2","ファズ宮","","",""],["vol.2","悪趣味な色彩のカエル","","",""],["vol.2","ノースロード","","",""],["vol.3","ドゥドゥディダーダー","パークカーニバル in TAMA 2026","場所：多摩中央公園\r\n日時：5/30(土)、13:30〜14:00\r\n※雨天時は5月31日(日)に延期。","https://tama-central-park.jp/event/entry-375.html"],["vol.3","エコノート","","",""],["vol.3","フィッシュおさかな","","",""],["vol.3","最大パルプ","","",""],["vol.3","ファズ宮","","",""],["vol.3","悪趣味な色彩のカエル","","",""],["vol.3","内山夏木","","",""]];
+const notices = [["vol.1","フライヤー","vol.1 開催にあたって","実は今回、こんな裏話があって…\n（エモいエピソード）\n\nじゅげむ じゅげむごこうのすりきれかいじゃりすいぎょのすいぎょうまつ うんらいまつ ふうらいまつくうねるところに すむところやぶらこうじの ぶらこうじぱいぽぱいぽ ぱいぽのしゅーりんがんしゅーりんがんの ぐーりんだいぐーりんだいの ぽんぽこぴーの ぽんぽこなーのちょうきゅうめいの ちょうすけ","https://drive.google.com/file/d/1YXgsFkpzU_Ezh9cXAYxV6ZFofVeYn0Ye/view?usp=drivesdk"],["vol.1","ドゥドゥディダーダー","","",""],["vol.1","エコ","","",""],["vol.1","フィッシュおさかな","","",""],["vol.1","最大パルプ","","",""],["vol.1","ファズ宮","","",""],["vol.1","悪趣味な色彩のカエル","","",""],["vol.1","ノースロード","","",""],["vol.2","フライヤー","vol.2 開催にあたって","実は今回、こんな裏話があって…\n（エモいエピソード）","https://drive.google.com/file/d/1wosh-lW6CXoiPfoR1LttN0zbnAQPG3a1/view?usp=sharing"],["vol.2","ドゥドゥディダーダー","集団下校の公式X開設！！","集団下校に関する最新情報や\nオフショットなどを配信📸","https://x.com/shuudangekou1"],["vol.2","エコノート","コンビ名を改名","「エコ」から「エコノート」に改名！",""],["vol.2","フィッシュおさかな","","",""],["vol.2","最大パルプ","","",""],["vol.2","ファズ宮","","",""],["vol.2","悪趣味な色彩のカエル","","",""],["vol.2","ノースロード","","",""],["vol.3","フライヤー","vol.3 開催にあたって","実は今回、こんな裏話があって…\n（エモいエピソード）","https://drive.google.com/file/d/1XIr3nmlgmpu_D-h26PPL4inV4Qb7-0TH/view?usp=drivesdk"],["vol.3","ドゥドゥディダーダー","パークカーニバル in TAMA 2026","場所：多摩中央公園\n料金：無料\n日時：5/30(土)、13:30〜14:00\n※雨天時は5月31日(日)に延期。\n","https://tama-central-park.jp/event/entry-375.html"],["vol.3","エコノート","","",""],["vol.3","フィッシュおさかな","","",""],["vol.3","最大パルプ","","",""],["vol.3","ファズ宮","","",""],["vol.3","悪趣味な色彩のカエル","","",""],["vol.3","内山夏木","","",""]];
 </script>
     <script>
         // ▼ここに追加：フロントエンド用のサニタイズ関数
@@ -596,7 +691,18 @@ const notices = [["vol.1","ドゥドゥディダーダー","","",""],["vol.1","�
                 return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#x60;' }[match];
             });
         }
+        
+        // ★ 追加：GoogleドライブのURLを画像として表示できるURLに変換する関数
+        function convertDriveUrlFrontend(url) {
+            if (!url) return '';
+            const match = String(url).match(/[-\w]{25,}/);
+            if (String(url).includes("drive.google.com") && match) {
+                return "https://drive.google.com/thumbnail?id=" + match[0] + "&sz=w1000";
+            }
+            return url;
+        }
         // ▲ここまで▲
+
         const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwjUowwoINZYV7KDCsditX21wydOayBpW6JLrqLQTHs_lQjchYe-Xi3vNpJyy6PftQ/exec';
         function setupCarousel(containerId, prevBtnId, nextBtnId, indicatorContainerId) {
             const container = document.getElementById(containerId);
@@ -612,8 +718,25 @@ const notices = [["vol.1","ドゥドゥディダーダー","","",""],["vol.1","�
                 dots.forEach((d, i) => d.classList.toggle('active', i === index));
             };
 
-            if(prev) prev.onclick = () => container.scrollBy({left: -container.clientWidth, behavior: 'smooth'});
-            if(next) next.onclick = () => container.scrollBy({left: container.clientWidth, behavior: 'smooth'});
+            // ★変更：ぐるっと戻る（ループ）ロジック
+            if(prev) {
+                prev.onclick = () => {
+                    if (container.scrollLeft <= 10) {
+                        container.scrollTo({left: container.scrollWidth, behavior: 'smooth'}); // 一番右へ
+                    } else {
+                        container.scrollBy({left: -container.clientWidth, behavior: 'smooth'});
+                    }
+                };
+            }
+            if(next) {
+                next.onclick = () => {
+                    if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                        container.scrollTo({left: 0, behavior: 'smooth'}); // 一番左へ
+                    } else {
+                        container.scrollBy({left: container.clientWidth, behavior: 'smooth'});
+                    }
+                };
+            }
             container.addEventListener('scroll', updateDots);
             updateDots();
         }
@@ -622,6 +745,66 @@ document.addEventListener('DOMContentLoaded', () => {
             const mainBoard = document.getElementById('main-board');
             const openingLayer = document.getElementById('opening-layer');
             let hasStarted = false;
+
+    　　　　// ----------------------------------------------------
+            // ▼ 修正：掲示板のボタンを自動生成し、最新順＆カルーセル（●〇〇）化 ▼
+            // ----------------------------------------------------
+            const generateVolButtons = () => {
+                const buttonsContainer = document.getElementById('dynamic-vol-buttons');
+                const indicatorsContainer = document.getElementById('volIndicators');
+                if (!buttonsContainer || typeof notices === 'undefined') return;
+
+                // ① 最新のvolから順に表示するために .reverse() を使用！
+                const uniqueVols = [...new Set(notices.map(row => row[0]))].filter(vol => vol).reverse();
+
+                buttonsContainer.innerHTML = '';
+                if(indicatorsContainer) indicatorsContainer.innerHTML = '';
+
+                // ② ボタンの作成
+                uniqueVols.forEach(vol => {
+                    const btn = document.createElement('button');
+                    btn.className = 'vol-btn';
+                    btn.style.scrollSnapAlign = 'center';
+                    
+                    // ★ シートの中からこのvolの「フライヤー」行を探す
+                    const flyerRow = notices.find(row => row[0] === vol && row[1] === "フライヤー");
+                    
+                    if (flyerRow && flyerRow[4]) {
+                        // ★変更：ドライブのURLを画像用に変換してから表示する
+                        const imgUrl = convertDriveUrlFrontend(flyerRow[4]);
+                        btn.innerHTML = `<img src="${escapeHtmlFrontend(imgUrl)}" class="vol-poster-img" alt="${vol}">`;
+                    } else {
+                        // 画像がない場合：黒板風にvol数だけ表示
+                        btn.innerHTML = `<div class="vol-poster-noimg">${escapeHtmlFrontend(vol)}</div>`;
+                    }
+
+                    btn.onclick = () => openNotice(vol);
+                    buttonsContainer.appendChild(btn);
+                });
+
+                // ③ ドット（●〇〇）の自動生成とスクロール連動
+                setTimeout(() => {
+                    if (indicatorsContainer) {
+                        // ボタンの幅が画面より大きい（スクロールできる）場合、ページ数を計算
+                        const pageCount = buttonsContainer.scrollWidth > buttonsContainer.clientWidth 
+                                          ? Math.ceil(buttonsContainer.scrollWidth / buttonsContainer.clientWidth) 
+                                          : 1;
+                        
+                        // ページ数分だけ「●」を作成
+                        for (let i = 0; i < pageCount; i++) {
+                            const dot = document.createElement('span');
+                            dot.className = 'dot' + (i === 0 ? ' active' : '');
+                            indicatorsContainer.appendChild(dot);
+                        }
+                    }
+                    // 放送室と同じスワイプ・スクロール機能をボタン群にも適用
+                    setupCarousel('dynamic-vol-buttons', 'volPrev', 'volNext', 'volIndicators');
+                }, 100); // ボタンが描画された直後に計算するため少し待機
+            };
+
+            // DOM読み込み完了時にボタン生成を実行
+            generateVolButtons();
+            // ----------------------------------------------------
 
             // ▼ 修正・追加：2回目以降のアクセスかチェック
             const hasSeen = sessionStorage.getItem('hasSeenOpening');
@@ -787,7 +970,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // ① AIの回答全体をまずは無害化（サニタイズ）する
             const safeText = escapeHtmlFrontend(text);
             
-            const urlPattern = /(https?:\/\/[^\s]+)/g;
+            const urlPattern = /(https?:\/\/[^\s。、！？「」]+)/g;
             // ② 無害化されたテキストからURLを探してリンクに変換
             const linkedText = safeText.replace(urlPattern, (url) => {
                 try {
@@ -825,56 +1008,137 @@ document.addEventListener('DOMContentLoaded', () => {
                 b.scrollTop = b.scrollHeight;
                 return d;
             }
-        });
+
+            // ★変更：スクロール中は隠して、止まったらひょっこり出すアニメーション処理（最強判定バージョン）
+            let scrollTimer;
+            const floatingUI = [
+                document.getElementById('hamburgerBtn'),
+                document.getElementById('socialSidebar'),
+                document.getElementById('custom-chat-btn')
+            ];
+            const movieSec = document.getElementById('movie'); // 「放送室」セクション
+
+            const checkFloatingUI = () => {
+                // メニューやチャットが開いている時は隠さない
+                const isMenuOpen = document.getElementById('hamburgerBtn').classList.contains('is-active');
+                const isChatOpen = document.getElementById('custom-chat-window').classList.contains('is-open');
+                if (isMenuOpen || isChatOpen) return;
+
+                // スクロール中はいったん全て隠す
+                floatingUI.forEach(el => {
+                    if (el) el.classList.add('is-hidden-ui');
+                });
+
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(() => {
+                    // スクロール停止時の判定（放送室が画面の半分より上に来たらひょっこり出す）
+                    if (movieSec && movieSec.getBoundingClientRect().top < window.innerHeight / 2) {
+                        floatingUI.forEach(el => {
+                            if (el) el.classList.remove('is-hidden-ui');
+                        });
+                    }
+                }, 250);
+            };
+
+            window.addEventListener('scroll', checkFloatingUI);
+            setTimeout(checkFloatingUI, 100); // 読み込み直後にも一度チェック
+
+        }); // DOMContentLoadedの閉じカッコ
 
 function openNotice(vol) {
-            const container = document.getElementById('notice-slider-container');
-            const indCont = document.getElementById('noticeIndicators');
-            container.innerHTML = '';
-            indCont.innerHTML = '';
+    const container = document.getElementById('notice-slider-container');
+    const indCont = document.getElementById('noticeIndicators');
+    container.innerHTML = '';
+    indCont.innerHTML = '';
 
-            const filtered = notices.filter(row => row[0] === vol);
-            if (filtered.length === 0) {
-                container.innerHTML = '<div class="carousel-slide"><div class="notice-card"><h3>準備中</h3><p>お知らせはまだありません。</p></div></div>';
-            } else {
-                filtered.forEach((row, i) => {
-                    const slide = document.createElement('div');
-                    slide.className = 'carousel-slide';
-                    
-                    // ▼ データを安全な文字列に変換
-                    const safeCombi = escapeHtmlFrontend(row[1]);
-                    const safeTitle = escapeHtmlFrontend(row[2]);
-                    const safeDetail = escapeHtmlFrontend(row[3]).replace(/\n/g, '<br>');
-                    
-                    // ▼ URLの安全性を確認
-                    let safeLinkHtml = '';
-                    if (row[4]) {
-                        const linkUrl = String(row[4]).trim();
-                        if (/^https?:\/\//i.test(linkUrl)) { 
-                            safeLinkHtml = `<a href="${escapeHtmlFrontend(linkUrl)}" target="_blank" class="notice-link">詳しく見る</a>`;
-                        }
-                    }
+    // ① 「フライヤー」行だけを抽出（1枚目用）
+    const flyerData = notices.find(row => row[0] === vol && row[1] === "フライヤー");
+    // ② それ以外の演者告知行を抽出（2枚目以降用）
+    const filteredNotices = notices.filter(row => row[0] === vol && row[1] !== "フライヤー");
 
-                    // ▼ 安全になった変数だけを画面に流し込む
-                    slide.innerHTML = `<div class="notice-card"><span class="combi-name">${safeCombi}</span><h3>${safeTitle}</h3><div class="detail">${safeDetail}</div>${safeLinkHtml}</div>`;
-                    
-                    container.appendChild(slide);
-                    
-                    const dot = document.createElement('span');
-                    dot.className = 'dot' + (i === 0 ? ' active' : '');
-                    indCont.appendChild(dot);
-                });
+    let slideIndex = 0;
+
+    // --- 1枚目：フライヤー＆エピソード画面 ---
+    if (flyerData) {
+        const flyerSlide = document.createElement('div');
+        flyerSlide.className = 'carousel-slide active';
+
+        const safeTitle = escapeHtmlFrontend(flyerData[2]);
+        const safeEpisode = escapeHtmlFrontend(flyerData[3]).replace(/\n/g, '<br>');
+        const safeImg = escapeHtmlFrontend(convertDriveUrlFrontend(flyerData[4]));
+
+        flyerSlide.innerHTML = `
+            <div class="notice-card" style="background:#fff; width:100%; max-width:none; padding: 20px 25px; display:flex; flex-direction:column;">
+                <strong class="flyer-pc-title" style="color:var(--bg-board); font-size:1.1rem; display:block; margin-bottom:8px; border-bottom: 2px solid var(--bg-board); padding-bottom: 5px; flex-shrink: 0;">${safeTitle}</strong>
+                
+                <div class="notice-scroll-area" style="flex-grow:1; overflow-y:auto;">
+                    <img src="${safeImg}" style="width:100%; border-radius:4px; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+                    <div class="flyer-episode-text">
+                        ${safeEpisode}
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px; flex-shrink: 0;">
+                    <a href="https://x.com/shuudangekou1" target="_blank" class="notice-link flyer-pc-btn" style="background-color:#000 !important; color:#fff !important; font-size: 1rem !important; padding: 14px 10px !important; width: 100%; box-sizing: border-box; white-space: nowrap;"><i class="fa-brands fa-x-twitter" style="margin-right:8px;"></i>集団下校公式 アカウント</a>
+                </div>
+            </div>
+        `;
+        container.appendChild(flyerSlide);
+
+        const dot = document.createElement('span');
+        dot.className = 'dot active';
+        indCont.appendChild(dot);
+        slideIndex++;
+    }
+
+    // --- 2枚目以降：演者告知カード ---
+    filteredNotices.forEach((row, i) => {
+        const slide = document.createElement('div');
+        const isActive = (slideIndex === 0 && i === 0) ? ' active' : '';
+        slide.className = 'carousel-slide' + isActive;
+
+        const safeCombi = escapeHtmlFrontend(row[1]);
+        const safeTitle = escapeHtmlFrontend(row[2]);
+        const safeDetail = escapeHtmlFrontend(row[3]).replace(/\n/g, '<br>');
+
+        let safeLinkHtml = '';
+        if (row[4]) {
+            const linkUrl = String(row[4]).trim();
+            if (/^https?:\/\//i.test(linkUrl)) {
+                safeLinkHtml = `<a href="${escapeHtmlFrontend(linkUrl)}" target="_blank" class="notice-link">詳しく見る</a>`;
             }
-            document.getElementById('notice-overlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            setTimeout(() => setupCarousel('notice-slider-container', 'noticePrev', 'noticeNext', 'noticeIndicators'), 100);
         }
 
-        function closeNotice() {
-            document.getElementById('notice-overlay').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        slide.innerHTML = `
+            <div class="notice-card" style="display:flex; flex-direction:column; padding: 20px 25px; width: 100%; max-width: none;">
+                <div style="flex-shrink: 0;">
+                    <span class="combi-name">${safeCombi}</span>
+                    <h3>${safeTitle}</h3>
+                </div>
+                
+                <div class="notice-scroll-area" style="flex-grow:1; overflow-y:auto;">
+                    <div class="detail">${safeDetail}</div>
+                </div>
+
+                ${safeLinkHtml ? `<div style="flex-shrink: 0; margin-top: 15px;">${safeLinkHtml}</div>` : ''}
+            </div>
+        `;
+        container.appendChild(slide);
+
+        const dot = document.createElement('span');
+        dot.className = 'dot' + isActive;
+        indCont.appendChild(dot);
+    });
+
+    document.getElementById('notice-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => setupCarousel('notice-slider-container', 'noticePrev', 'noticeNext', 'noticeIndicators'), 100);
+}
+
+function closeNotice() {
+    document.getElementById('notice-overlay').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
     </script>
 </body>
 </html>
