@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>集団下校 | ユニットライブ</title>
     <meta name="description" content="吉本、ワタナベ、人力舎の芸歴1年目が集うお笑い同期ユニットライブ「集団下校」の公式サイトです。最新のライブ情報やチケット予約はこちらから！">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://drive.google.com https://*.googleusercontent.com; frame-src 'self' https://maps.google.co.jp https://www.google.com;">
-    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https://drive.google.com https://*.googleusercontent.com https://www.google-analytics.com https://www.googletagmanager.com; frame-src 'self' https://maps.google.co.jp https://www.google.com https://drive.google.com;">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&family=Yomogi&family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
@@ -78,24 +77,41 @@
         .info-label { font-family: var(--font-hand); color: #ccc; font-size: 1.1rem; margin-bottom: 4px; }
         .info-value { padding-left: 10px; font-weight: 700; font-size: 1.2rem; }
         #MEMBERS_START, #MEMBERS_END { display: none !important; }
+        /* ★① スマホ版の列数を修正前の縦1列(1fr)に戻し、見やすさ優先で間隔(gap)も元の30pxに復元 */
         .grid-list { display: grid; grid-template-columns: 1fr; gap: 30px; list-style: none; margin-top: 0; }
         @media (min-width: 600px) { .grid-list { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+        
         .card-box { background-color: #fcfcfc; box-shadow: 2px 4px 8px rgba(0,0,0,0.5); position: relative; border-radius: 2px; height: auto; padding-bottom: 15px; transition: transform 0.2s; }
         .card-box:hover { transform: translateY(-3px); }
+        
+        /* ★④ マグネットバーの追加を修正前に戻すため削除 */
+        
+        /* ★④ 所属タグの位置を修正前のトップ6px、元のサイズ感に完全復元 */
         .affiliation-tag { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 120px; height: 20px; border-radius: 3px; box-shadow: 1px 3px 4px rgba(0,0,0,0.4), inset 0 2px 2px rgba(255,255,255,0.4), inset 0 -2px 2px rgba(0,0,0,0.2); z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,0.5); letter-spacing: 2px; font-family: 'M PLUS Rounded 1c', sans-serif; }
         .magnet-red .affiliation-tag { background-color: #e63946; } .magnet-blue .affiliation-tag { background-color: #457b9d; } .magnet-yellow .affiliation-tag { background-color: #e9c46a; } .magnet-green .affiliation-tag { background-color: #2a9d8f; }
 
-        .combi-name-bar { background-color: transparent; color: #333; font-family: var(--font-serif); font-weight: bold; font-size: 0.95rem; padding: 30px 5px 8px; border-bottom: 2px dashed #ccc; text-align: center; }
+        /* ★③ コンビ名の表示ルールは修正後のまま（1行に収めて三点リーダー表示） */
+        .combi-name-bar { background-color: transparent; color: #333; font-family: var(--font-serif); font-weight: bold; font-size: 0.85rem; padding: 35px 5px 6px; border-bottom: 2px dashed #ccc; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .card-img-box { width: 100%; aspect-ratio: 1 / 1; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.8rem; background-size: cover; background-position: center; }
-        .member-details { display: flex; flex-direction: column; gap: 16px; padding: 15px 10px 0; }
-        .member-person { display: flex; flex-direction: column; align-items: center; border-bottom: 1px dashed #ccc; padding-bottom: 15px; }
-        .member-person:last-child { border-bottom: none; padding-bottom: 0; }
-        .member-name { font-family: var(--font-serif); font-size: 0.9rem; font-weight: bold; color: #222; margin-bottom: 10px; line-height: 1.3; text-align: center; }
-        .member-pos { font-size: 0.7rem; color: #666; font-weight: normal; display: block; }
-        .sns-links { display: flex; gap: 10px; justify-content: center; }
-        .sns-links a { color: #555; transition: color 0.2s, transform 0.2s; display: inline-block; margin: 0 2px; }
+        
+        /* ★⑤ 全体的な文字サイズ・余白の縮小は修正後のコンパクトさを維持 */
+        .member-details { display: flex; flex-direction: column; gap: 8px; padding: 10px 5px 0; }
+        .member-person { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        
+        /* ★② 左右メンバーの配置：スマホ版はすっきり横並び、PC版（600px以上）の時は縦3段並びに自動可変するよう設計 */
+        .member-person-row { display: flex; justify-content: space-evenly; align-items: flex-start; gap: 4px; padding-top: 5px; }
+        @media (min-width: 600px) {
+            .member-person-row { flex-direction: column; align-items: center; width: 100%; gap: 12px; }
+            .member-person-row .member-person:first-child { border-bottom: 1px dashed #ccc; padding-bottom: 12px; width: 100%; }
+        }
+        
+        /* ★② 長い表示名（りゅーしょー伝説など）を画面幅に連動して自動縮小させ、強制的に1行に収める設定 */
+        .member-name { font-family: var(--font-serif); font-size: clamp(0.65rem, 1.8vw, 0.85rem); font-weight: bold; color: #222; margin-bottom: 4px; line-height: 1.2; text-align: center; white-space: nowrap; width: 100%; display: block; }
+        .member-pos { font-size: 0.6rem; color: #666; font-weight: normal; display: block; }
+        .sns-links { display: flex; gap: 6px; justify-content: center; }
+        .sns-links a { color: #555; transition: color 0.2s, transform 0.2s; display: inline-block; }
         .sns-links a:hover { color: #000; transform: scale(1.1); }
-        .sns-links i { font-size: 1.1rem; }
+        .sns-links i { font-size: 0.95rem; }
 
         /* === カルーセル共通 === */
         .carousel-wrapper { width: 100%; max-width: 600px; margin: 0 auto; position: relative; overflow: visible !important; }
@@ -120,10 +136,12 @@
         .play-icon { font-size: 3.5rem; color: #E6C445; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); position: relative; z-index: 2; }
         .coming-soon-slide { width: 100%; aspect-ratio: 16/9; background: rgba(0,0,0,0.4); border: 2px dashed rgba(255,255,255,0.4); border-radius: 8px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.5; }
 
-        .video-modal-content { position: relative; width: 95%; max-width: 1000px; margin: auto; background-color: #fff; padding: 8px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-        .video-wrapper { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 16/9; }
-        .video-wrapper video { width: 100%; height: 100%; }
-        #closeVideoBtn { position: absolute; top: -15px; right: -15px; background-color: #e63946; color: #fff; border: 2px solid #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.5); z-index: 5002; }
+        /* ★修正：動画モーダルの白枠・余白を完全撤去し、洗練されたシネマモードに変更 */
+        .video-modal-content { position: relative; width: 100%; max-width: 900px; margin: auto; background-color: transparent; padding: 0; border-radius: 0; box-shadow: none; }
+        .video-wrapper { width: 100%; height: 100%; border-radius: 0; overflow: hidden; background: #000; aspect-ratio: 16/9; }
+        /* 閉じる(✖)ボタンを動画枠の外側へスマートに配置 */
+        #closeVideoBtn { position: absolute; top: -50px; right: 10px; background-color: rgba(0,0,0,0.6); color: #fff; border: 2px solid rgba(255,255,255,0.6); width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 5002; transition: all 0.2s; }
+        #closeVideoBtn:hover { background-color: #e63946; border-color: #fff; transform: scale(1.1); }
 
         /* === 掲示板 === */
         /* ★変更：スマホの画面幅に合わせて文字を自動縮小（clamp）し、絶対にはみ出さず左右対称にする */
@@ -166,7 +184,8 @@
         .overlay-bg { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px); }
         .notice-close-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: white; font-size: 40px; cursor: pointer; z-index: 10002; }
         .notice-card { width: 90%; max-width: 400px; margin: 20px auto; background: #D5E8D4; border: 4px solid #2E5D4B; border-radius: 15px; padding: 20px; color: #333; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .notice-card h3 { color: #2E5D4B !important; border-bottom: 2px solid #2E5D4B !important; margin-bottom: 15px !important; font-size: 1.4rem !important; font-weight: 900 !important; padding-bottom: 8px !important; line-height: 1.4 !important; }
+        /* ★修正：スプレッドシートの改行位置を完全に優先させ、文字数が多い場合は自動縮小して1行に収める設定 */
+        .notice-card h3 { color: #2E5D4B !important; border-bottom: 2px solid #2E5D4B !important; margin-bottom: 15px !important; font-size: clamp(1rem, 5.2vw, 1.4rem) !important; font-weight: 900 !important; padding-bottom: 8px !important; line-height: 1.4 !important; white-space: nowrap; }
         .notice-card .combi-name { display: inline-block !important; background-color: #fff !important; color: #2E5D4B !important; border: 2px solid #2E5D4B !important; font-size: 0.95rem !important; font-weight: bold !important; padding: 4px 12px !important; border-radius: 4px !important; margin-bottom: 15px !important; box-shadow: none !important; }
         .notice-card .detail { white-space: pre-wrap; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
         .notice-link { display: block !important; text-align: center !important; background-color: #f4d03f !important; color: #1a3c2c !important; text-decoration: none !important; padding: 14px 20px !important; border-radius: 8px !important; font-size: 1.1rem !important; font-weight: 900 !important; box-shadow: 0 4px 6px rgba(0,0,0,0.3), inset 0 -3px 0 rgba(0,0,0,0.1) !important; transition: transform 0.1s !important; }
@@ -193,6 +212,11 @@
             #notice-overlay .carousel-wrapper { margin-top: -5vh !important; }
             .notice-card { max-width: 82% !important; max-height: 68vh !important; margin: 0 auto !important; }
             .notice-close-btn { font-size: 35px !important; top: 15px !important; right: 15px !important; }
+
+            /* ▼ 修正：YouTubeに最適化し、スマホ画面横幅100%の超美麗な全画面表示へ昇華 ▼ */
+            .video-modal-content { width: 100% !important; padding: 0 !important; background-color: transparent !important; }
+            .video-wrapper { aspect-ratio: 16/9 !important; }
+            #closeVideoBtn { top: -55px !important; right: 15px !important; }
         }
 
         /* === 職員室 === */
@@ -292,7 +316,8 @@
             .op-flyer { max-width: min(1050px, calc(90vh * 3 / 4)) !important; }
             body { font-size: 1.1rem !important; }
             .combi-name-bar { font-size: 1.4rem !important; font-weight: 800 !important; padding-top: 35px !important; padding-bottom: 15px !important; }
-            .member-name { font-size: 1.2rem !important; font-weight: 800 !important; margin-bottom: 12px !important; }
+            /* ★② PC版でも「りゅーしょー伝説」などの長い名前が強制的に1行に綺麗に収まるよう自動縮小(clamp)とnowrapを設定 */
+            .member-name { font-size: clamp(0.9rem, 1.3vw, 1.2rem) !important; font-weight: 800 !important; margin-bottom: 12px !important; white-space: nowrap; width: 100%; display: block; }
             .affiliation-tag { font-size: 0.9rem !important; width: 140px !important; height: 24px !important; }
             .sns-links i { font-size: 1.6rem !important; }
             .sns-links a { margin: 0 10px !important; }
@@ -417,6 +442,15 @@
             .catchphrase { font-size: 1.4rem !important; letter-spacing: 1px !important; margin-bottom: 30px !important; }
         }
     </style>
+
+　　<script async src="https://www.googletagmanager.com/gtag/js?id=G-MD1JSFZYLP"></script>
+　　<script>
+ 　　 window.dataLayer = window.dataLayer || [];
+  　　function gtag(){dataLayer.push(arguments);}
+ 　　 gtag('js', new Date());
+
+  　　gtag('config', 'G-MD1JSFZYLP');
+　　</script>
 </head>
 <body class="is-locked">
     
@@ -425,10 +459,10 @@
         <div class="notebook-paper">
             <h2>目次</h2>
             <ul>
-                <li><a href="#movie">放送室</a></li>
                 <li><a href="#info">時間割</a></li>
                 <li><a href="#member">出演者</a></li>
                 <li><a href="#notice-board">掲示板</a></li>
+                <li><a href="#movie">放送室</a></li>
                 <li><a href="#staff">職員室</a></li>
                 <li><a href="#guidelines">校則（注意事項）</a></li>
                 <li><a href="#access">通学路</a></li>
@@ -448,32 +482,6 @@
         </div>
 
         <div class="intro-text">吉本、人力舎、フリーの<br>芸歴二年目が集う<br class="sp-br">同期ライブ「集団下校」🏫<br>ネタとコーナーで<br class="sp-br">バチバチの90分‼️</div>
-
-        <section id="movie">
-            <h2 class="section-title">放送室</h2>
-            <div class="carousel-wrapper">
-                <button class="carousel-nav prev" id="videoPrev"><i class="fa-solid fa-chevron-left"></i></button>
-                <div class="carousel-container" id="videoCarousel">
-                    <div class="carousel-slide">
-                        <div class="video-thumbnail" id="openVideoBtn">
-                            <video class="thumbnail-bg-video" src="./digest_movie.mp4#t=0.001" muted playsinline preload="metadata"></video>
-                            <div class="thumbnail-overlay"><i class="fa-solid fa-circle-play play-icon"></i></div>
-                        </div>
-                        <p style="text-align:center; margin-top:5px; font-weight:bold;">第1回 ダイジェスト</p>
-                    </div>
-                    <div class="carousel-slide" style="padding: 0 5px;">
-                        <div class="coming-soon-slide">
-                            <i class="fa-solid fa-film" style="font-size:2rem; margin-bottom:10px;"></i>
-                            <p>第2回 ダイジェスト<br><span style="color: #E6C445; font-weight: bold;">Coming Soon...</span></p>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-nav next" id="videoNext"><i class="fa-solid fa-chevron-right"></i></button>
-                <div class="carousel-indicators" id="videoIndicators">
-                    <span class="dot active"></span><span class="dot"></span>
-                </div>
-            </div>
-        </section>
 
         <section id="info">
             <h2 class="section-title">時間割</h2>
@@ -502,9 +510,17 @@
           <div class="combi-name-bar">ドゥドゥディダーダー</div>
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1YJkD70xxvvU5oiFEnKyYDGxiTaATxBzD&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
-              <div class="member-person" style="padding-bottom: 10px;"><span class="member-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">コンビ公式</span><div class="sns-links"><a href="https://stand.fm/channels/6925f8938ddb67b39644a013" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
-              <div class="member-person"><span class="member-name">りゅーしょー伝説<span class="member-pos">（写真・左）</span></span><div class="sns-links"><a href="https://x.com/legend_ryusho" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
-              <div class="member-person"><span class="member-name">坂口拓也<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/dododedada_saka" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/dododedada_saka" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div></div>
+              <div class="member-person" style="padding-bottom: 6px; border-bottom: 1px dashed #ccc;"><span class="member-name" style="font-size: 0.65rem; color: #888; margin-bottom: 2px;">コンビ公式</span><div class="sns-links"><a href="https://stand.fm/channels/6925f8938ddb67b39644a013" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">りゅーしょー伝説<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"><a href="https://x.com/legend_ryusho" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">坂口拓也<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/dododedada_saka" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/dododedada_saka" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="card-box magnet-red">
@@ -512,9 +528,17 @@
           <div class="combi-name-bar">エコノート</div>
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1-9YeVeeFzdyDLIPAgH6JqtH1-NKGk5jH&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
-              <div class="member-person" style="padding-bottom: 10px;"><span class="member-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@eco_note" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://stand.fm/channels/67ef7dc587fe90ae1753dc3e" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
-              <div class="member-person"><span class="member-name">福田幸人<span class="member-pos">（写真・左）</span></span><div class="sns-links"><a href="https://x.com/kout_fkd" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/kout_fkd" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div></div>
-              <div class="member-person"><span class="member-name">ヒデタカハシ<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/eco_hide" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/eco_hide" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="https://www.youtube.com/@ゲームタカヒデ" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a></div></div>
+              <div class="member-person" style="padding-bottom: 6px; border-bottom: 1px dashed #ccc;"><span class="member-name" style="font-size: 0.65rem; color: #888; margin-bottom: 2px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@eco_note" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://stand.fm/channels/67ef7dc587fe90ae1753dc3e" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">福田幸人<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"><a href="https://x.com/kout_fkd" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/kout_fkd" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">ヒデタカハシ<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/eco_hide" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/eco_hide" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="https://www.youtube.com/@ゲームタカヒデ" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="card-box magnet-red">
@@ -522,9 +546,17 @@
           <div class="combi-name-bar">フィッシュおさかな</div>
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1yPVR4N94c4f3UFvUkZ0blQMatanibm5d&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
-              <div class="member-person" style="padding-bottom: 10px;"><span class="member-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@フィッシュおさかなのチャンネル番組" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a></div></div>
-              <div class="member-person"><span class="member-name">小山<span class="member-pos">（写真・左）</span></span><div class="sns-links"><a href="https://x.com/wagon_nsc30" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
-              <div class="member-person"><span class="member-name">カイト<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/OhtaniShohei_LA" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
+              <div class="member-person" style="padding-bottom: 6px; border-bottom: 1px dashed #ccc;"><span class="member-name" style="font-size: 0.65rem; color: #888; margin-bottom: 2px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@フィッシュおさかなのチャンネル番組" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">小山<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"><a href="https://x.com/wagon_nsc30" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">カイト<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/OhtaniShohei_LA" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="card-box magnet-yellow">
@@ -532,9 +564,17 @@
           <div class="combi-name-bar">最大パルプ</div>
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1ptLWGLbrSCXmDPpqMhlFzXEkFxwRWk56&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
-              <div class="member-person" style="padding-bottom: 10px;"><span class="member-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@SaidaiPulp" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://www.p-jinriki.com/sp/talent/saidaipulp/" target="_blank" title="公式HP"><i class="fa-solid fa-house"></i></a><a href="https://stand.fm/channels/682075774d20b5ed88f8a62f" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
-              <div class="member-person"><span class="member-name">平野<span class="member-pos">（写真・左）</span></span><div class="sns-links"><a href="https://x.com/sidiplup_hrn" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
-              <div class="member-person"><span class="member-name">堀井<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/saidaipulphorii" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
+              <div class="member-person" style="padding-bottom: 6px; border-bottom: 1px dashed #ccc;"><span class="member-name" style="font-size: 0.65rem; color: #888; margin-bottom: 2px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@SaidaiPulp" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://www.p-jinriki.com/sp/talent/saidaipulp/" target="_blank" title="公式HP"><i class="fa-solid fa-house"></i></a><a href="https://stand.fm/channels/682075774d20b5ed88f8a62f" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">平野<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"><a href="https://x.com/sidiplup_hrn" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">堀井<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/saidaipulphorii" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="card-box magnet-yellow">
@@ -542,9 +582,17 @@
           <div class="combi-name-bar">ファズ宮</div>
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1baWR6ghCh0SS4jcdgmARG7-YGiPeoYz0&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
-              <div class="member-person" style="padding-bottom: 10px;"><span class="member-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">コンビ公式</span><div class="sns-links"><a href="https://www.p-jinriki.com/talent/fazumiya/" target="_blank" title="公式HP"><i class="fa-solid fa-house"></i></a></div></div>
-              <div class="member-person"><span class="member-name">花寺ビスク<span class="member-pos">（写真・左）</span></span><div class="sns-links"><a href="https://x.com/hanadera_bisque" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/zgg_miel" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div></div>
-              <div class="member-person"><span class="member-name">ぴかぴか標識<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/C_nosaki" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
+              <div class="member-person" style="padding-bottom: 6px; border-bottom: 1px dashed #ccc;"><span class="member-name" style="font-size: 0.65rem; color: #888; margin-bottom: 2px;">コンビ公式</span><div class="sns-links"><a href="https://www.p-jinriki.com/talent/fazumiya/" target="_blank" title="公式HP"><i class="fa-solid fa-house"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">花寺ビスク<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"><a href="https://x.com/hanadera_bisque" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/zgg_miel" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">ぴかぴか標識<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/C_nosaki" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="card-box magnet-yellow">
@@ -552,9 +600,17 @@
           <div class="combi-name-bar">悪趣味な色彩のカエル</div>
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1JIkZhfvMxDw2dXDr_kQ9M7X2i9gu2y0K&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
-              <div class="member-person" style="padding-bottom: 10px;"><span class="member-name" style="font-size: 0.75rem; color: #888; margin-bottom: 5px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@悪趣味な色彩のカエル" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://www.p-jinriki.com/sp/talent/akushuminasikisaifrog/" target="_blank" title="公式HP"><i class="fa-solid fa-house"></i></a><a href="https://podcasts.apple.com/jp/podcast/悪趣味な色彩のカエルのなきごえ/id1762659674" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
-              <div class="member-person"><span class="member-name">えじき<span class="member-pos">（写真・左）</span></span><div class="sns-links"><a href="https://www.instagram.com/khysf._" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div></div>
-              <div class="member-person"><span class="member-name">羽立<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/yuyu_rinchi6633" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/hanehane_138" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div></div>
+              <div class="member-person" style="padding-bottom: 6px; border-bottom: 1px dashed #ccc;"><span class="member-name" style="font-size: 0.65rem; color: #888; margin-bottom: 2px;">コンビ公式</span><div class="sns-links"><a href="https://www.youtube.com/@悪趣味な色彩のカエル" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a><a href="https://www.p-jinriki.com/sp/talent/akushuminasikisaifrog/" target="_blank" title="公式HP"><i class="fa-solid fa-house"></i></a><a href="https://podcasts.apple.com/jp/podcast/悪趣味な色彩のカエルのなきごえ/id1762659674" target="_blank" title="ラジオ"><i class="fa-solid fa-radio"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">えじき<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"><a href="https://www.instagram.com/khysf._" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">羽立<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/yuyu_rinchi6633" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a><a href="https://www.instagram.com/hanehane_138" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
       <div class="card-box magnet-blue">
@@ -563,8 +619,16 @@
           <div class="card-img-box" style="background-image: url('https://drive.google.com/thumbnail?id=1DCCNiOmWNpreETgtY1CMqyYzeJrt26B5&amp;sz=w1000'); background-size: cover; background-position: center;"></div>
           <div class="card-info member-details">
               
-              <div class="member-person"><span class="member-name">内山<span class="member-pos">（写真・左）</span></span><div class="sns-links"></div></div>
-              <div class="member-person"><span class="member-name">夏木<span class="member-pos">（写真・右）</span></span><div class="sns-links"><a href="https://x.com/natsukiuchiya" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div></div>
+              <div class="member-person-row">
+                  <div class="member-person">
+                      <span class="member-name">内山<br><span class="member-pos">(左)</span></span>
+                      <div class="sns-links"></div>
+                  </div>
+                  <div class="member-person">
+                      <span class="member-name">夏木<br><span class="member-pos">(右)</span></span>
+                      <div class="sns-links"><a href="https://x.com/natsukiuchiya" target="_blank" title="X(Twitter)"><i class="fa-brands fa-x-twitter"></i></a></div>
+                  </div>
+              </div>
           </div>
       </div>
 </div>
@@ -584,6 +648,33 @@
                 <button class="carousel-nav next" id="volNext" style="right: -30px; width: 40px; height: 40px; font-size: 1.2rem; z-index: 200;"><i class="fa-solid fa-chevron-right"></i></button>
                 <div class="carousel-indicators" id="volIndicators" style="margin-top: 15px;">
                     </div>
+            </div>
+        </section>
+
+        <section id="movie">
+            <h2 class="section-title">放送室</h2>
+            <div class="carousel-wrapper">
+                <button class="carousel-nav prev" id="videoPrev"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="carousel-container" id="videoCarousel">
+                    <div class="carousel-slide">
+                        <div class="video-thumbnail" onclick="openLocalVideoModal('./digest_movie_vol2.mp4')">
+                            <video class="thumbnail-bg-video" src="./digest_movie_vol2.mp4#t=0.001" muted playsinline preload="metadata"></video>
+                            <div class="thumbnail-overlay"><i class="fa-solid fa-circle-play play-icon"></i></div>
+                        </div>
+                        <p style="text-align:center; margin-top:5px; font-weight:bold;">第2回 ダイジェスト</p>
+                    </div>
+                    <div class="carousel-slide" style="padding: 0 5px;">
+                        <div class="video-thumbnail" onclick="openLocalVideoModal('./digest_movie.mp4')">
+                            <video class="thumbnail-bg-video" src="./digest_movie.mp4#t=0.001" muted playsinline preload="metadata"></video>
+                            <div class="thumbnail-overlay"><i class="fa-solid fa-circle-play play-icon"></i></div>
+                        </div>
+                        <p style="text-align:center; margin-top:5px; font-weight:bold;">第1回 ダイジェスト</p>
+                    </div>
+                </div>
+                <button class="carousel-nav next" id="videoNext"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="carousel-indicators" id="videoIndicators">
+                    <span class="dot active"></span><span class="dot"></span>
+                </div>
             </div>
         </section>
 
@@ -632,7 +723,8 @@
     </div>
 
     <div id="socialSidebar" class="social-sidebar"><a href="https://x.com/shuudangekou1" target="_blank" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a></div>
-    <div class="sticky-ticket-bar"><a href="https://tiget.net/events/486821" class="btn-sticky" target="_blank">TIGETで予約する (¥1,500)</a></div>
+    
+    <div class="sticky-ticket-bar"><a href="https://tiget.net/events/486821" class="btn-sticky" target="_blank" onclick="if(typeof gtag === 'function') gtag('event', 'click_reserve', {'event_category': 'ticket', 'event_label': 'TIGET_Footer'});">TIGETで予約する (¥1,500)</a></div>
 
     <div id="chat-overlay" class="modal-overlay" style="z-index: 4500;"></div>
     <div id="custom-chat-btn" class="custom-chat-btn"><i class="fa-solid fa-comment-dots"></i><span>相談する</span></div>
@@ -671,17 +763,18 @@
 
     <div id="videoModal" class="modal-overlay">
         <div class="video-modal-content">
-            <button id="closeVideoBtn"><i class="fa-solid fa-xmark"></i></button>
+            <button id="closeVideoBtn" onclick="closeLocalVideoModal()"><i class="fa-solid fa-xmark"></i></button>
             <div class="video-wrapper">
-                <video id="modalVideoPlayer" controls playsinline>
-                    <source src="./digest_movie.mp4" type="video/mp4">
-                </video>
+                <video id="modalVideoPlayer" controls playsinline style="width: 100%; height: 100%; object-fit: contain; background: #000;"></video>
             </div>
         </div>
     </div>
-
+    
+<script id="MOVIE_DATA">
+const movies = [["第1回 ダイジェスト","https://youtube.com/shorts/gDgaFHUgoXQ?feature=share",""],["第2回 ダイジェスト","https://youtube.com/shorts/20fdbSjQqOs?feature=share",""]];
+</script>
     <script id="NOTICE_DATA">
-const notices = [["vol.1","フライヤー","vol.1 開催にあたって","","https://drive.google.com/file/d/1YXgsFkpzU_Ezh9cXAYxV6ZFofVeYn0Ye/view?usp=drivesdk"],["vol.1","ドゥドゥディダーダー","漫才特化ライブ！\n「まんとくん」","日付：2月26日(木)\n会場：早稲田クローバーススタジオ","https://tiget.net/events/465840"],["vol.1","エコ","ユーチューブ","YouTubeチャンネルやってます。","https://www.youtube.com/@eco_note"],["vol.1","フィッシュおさかな","カイトについて","左耳にめっちゃホクロがあります。","https://x.com/OhtaniShohei_LA"],["vol.1","最大パルプ","ユニットライブ\n「大親友」","日付：2月3日(火)\n会場：池袋西口GEKIBA\nノースロード、悪趣味な色彩のカエルも出演","https://tiget.net/events/456322"],["vol.1","ファズ宮","ユニットライブ開催予定!?","日付：2月20日\n会場：阿佐ヶ谷アートスペースプロット","https://tiget.net/events/462245"],["vol.1","悪趣味な色彩のカエル","ラジオ","すすすっとやっています。","https://podcasts.apple.com/jp/podcast/悪趣味な色彩のカエルのなきごえ/id1762659674"],["vol.1","ノースロード","ユニットライブ\n「花」","日時：2月11日(水)、21時\n場所：下北ZAWAZAWA","https://www.shimokita-zawazawa.com/"],["vol.2","フライヤー","vol.2 開催にあたって","","https://drive.google.com/file/d/1wosh-lW6CXoiPfoR1LttN0zbnAQPG3a1/view?usp=sharing"],["vol.2","ドゥドゥディダーダー","集団下校\n公式X開設！！","集団下校に関する最新情報や\nオフショットなどを配信📸","https://x.com/shuudangekou1"],["vol.2","エコノート","コンビ名を改名","「エコ」から「エコノート」に改名！","https://www.youtube.com/@eco_note"],["vol.2","フィッシュおさかな","「漫才をしないと出れない部屋」","日付：4月15日(水)\n場所：池袋ムーブメントスタジオ","https://tiget.net/events/476882?fbclid=PAZnRzaAQxiZtleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafBDL_lE7PzqlxSGaywwQrx4naAOcxG1ho9J60mwfGlh7l2Ok7PNRjIXQYPKQ_aem_zaKGfi9sTZMz_2fSRrmYCA"],["vol.2","最大パルプ","ラジオ","5月から週１でラジオ始めます！","https://stand.fm/channels/682075774d20b5ed88f8a62f"],["vol.2","ファズ宮","イマーシブ体験型\nお笑いライブ「CHAIR」","日付：4月19日\n会場：阿佐ヶ谷アートスペースプロット","https://tiget.net/events/475533"],["vol.2","悪趣味な色彩のカエル","YouTube","ただ歩いてる動画や\nただ走ってる動画とかも\nアップしてます。","https://www.youtube.com/@悪趣味な色彩のカエル"],["vol.2","ノースロード","ライブ\n「ぶりぶり天守閣」","日付：3月27日(金)\n場所：池袋ムーブメントスタジオ","https://tiget.net/events/456947"],["vol.3","フライヤー","vol.3 開催にあたって","3回目の開催となる今回は、\nフリーの「内山夏木」が初登場！\n実は前回で卒業した\n「ノースロード」からの\n直接指名でした！","https://drive.google.com/file/d/1XIr3nmlgmpu_D-h26PPL4inV4Qb7-0TH/view?usp=drivesdk"],["vol.3","ドゥドゥディダーダー","パークカーニバル\nin TAMA 2026","場所：多摩中央公園\n料金：無料\n日時：5/30(土)、13:30〜14:00\n※雨天時は5月31日(日)に延期。","https://tama-central-park.jp/event/entry-375.html"],["vol.3","エコノート","","",""],["vol.3","フィッシュおさかな","「ジャイアントキリン」","場所：銀座お笑いPLACE\n料金：￥1,500\n日時：6/14(土)21:00～22:30","https://tiget.net/events/490252"],["vol.3","最大パルプ","","",""],["vol.3","ファズ宮","","",""],["vol.3","悪趣味な色彩のカエル","第二回単独公演\n「くちのかたちたち」","場所：プーク人形劇場\n料金：￥2,000\n日時：7/9(木)、19:00～20:10","https://tiget.net/events/483161"],["vol.3","内山夏木","漫才ユニットライブ\n「準々決勝Aブロック」","場所：新宿fu-+801\n料金：￥1,000\n日時：5/30(土)、13:00～14:30","https://tiget.net/events/483699"]];
+const notices = [["vol.1","フライヤー","vol.1 開催にあたって","","","https://drive.google.com/file/d/1YXgsFkpzU_Ezh9cXAYxV6ZFofVeYn0Ye/view?usp=drivesdk"],["vol.1","ドゥドゥディダーダー","漫才特化ライブ！\n「まんとくん」","日付：2月26日(木)\n会場：早稲田クローバーススタジオ","https://tiget.net/events/465840",""],["vol.1","エコ","ユーチューブ","YouTubeチャンネルやってます。","https://www.youtube.com/@eco_note",""],["vol.1","フィッシュおさかな","カイトについて","左耳にめっちゃホクロがあります。","https://x.com/OhtaniShohei_LA",""],["vol.1","最大パルプ","ユニットライブ\n「大親友」","日付：2月3日(火)\n会場：池袋西口GEKIBA\nノースロード、悪趣味な色彩のカエルも出演","https://tiget.net/events/456322",""],["vol.1","ファズ宮","ユニットライブ\n開催予定!?","日付：2月20日\n会場：阿佐ヶ谷アートスペースプロット","https://tiget.net/events/462245",""],["vol.1","悪趣味な色彩のカエル","ラジオ","すすすっとやっています。","https://podcasts.apple.com/jp/podcast/悪趣味な色彩のカエルのなきごえ/id1762659674",""],["vol.1","ノースロード","ユニットライブ\n「花」","日時：2月11日(水)、21時\n場所：下北ZAWAZAWA","https://www.shimokita-zawazawa.com/",""],["vol.2","フライヤー","vol.2 開催にあたって","","","https://drive.google.com/file/d/1wosh-lW6CXoiPfoR1LttN0zbnAQPG3a1/view?usp=sharing"],["vol.2","ドゥドゥディダーダー","集団下校\n公式X開設！！","集団下校に関する最新情報や\nオフショットなどを配信📸","https://x.com/shuudangekou1",""],["vol.2","エコノート","コンビ名を改名","「エコ」から「エコノート」に改名！","https://www.youtube.com/@eco_note",""],["vol.2","フィッシュおさかな","漫才をしないと\n出れない部屋","日付：4月15日(水)\n場所：池袋ムーブメントスタジオ","https://tiget.net/events/476882?fbclid=PAZnRzaAQxiZtleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAafBDL_lE7PzqlxSGaywwQrx4naAOcxG1ho9J60mwfGlh7l2Ok7PNRjIXQYPKQ_aem_zaKGfi9sTZMz_2fSRrmYCA",""],["vol.2","最大パルプ","ラジオ","5月から週１でラジオ始めます！","https://stand.fm/channels/682075774d20b5ed88f8a62f",""],["vol.2","ファズ宮","イマーシブ体験型\nお笑いライブ「CHAIR」","日付：4月19日\n会場：阿佐ヶ谷アートスペースプロット","https://tiget.net/events/475533",""],["vol.2","悪趣味な色彩のカエル","YouTube","ただ歩いてる動画や\nただ走ってる動画とかも\nアップしてます。","https://www.youtube.com/@悪趣味な色彩のカエル",""],["vol.2","ノースロード","ライブ\n「ぶりぶり天守閣」","日付：3月27日(金)\n場所：池袋ムーブメントスタジオ","https://tiget.net/events/456947",""],["vol.3","フライヤー","vol.3 開催にあたって","3回目の開催となる今回は、\nフリーの「内山夏木」が初登場！\n実は前回で卒業した\n「ノースロード」からの\n直接指名でした！","","https://drive.google.com/file/d/1XIr3nmlgmpu_D-h26PPL4inV4Qb7-0TH/view?usp=drivesdk"],["vol.3","ドゥドゥディダーダー","パークカーニバル\nin TAMA 2026","場所：多摩中央公園\n料金：無料\n日時：5/30(土)、13:30〜14:00\n※雨天時は5月31日(日)に延期。\n","https://tama-central-park.jp/event/entry-375.html","https://drive.google.com/file/d/1eoJd7-XV9A2xtGhhh2CFTSa6eswMfGyA/view?usp=drive_link"],["vol.3","エコノート","","","",""],["vol.3","フィッシュおさかな","「ジャイアントキリン」","場所：銀座お笑いPLACE\n料金：￥1,500\n日時：6/14(土)21:00～22:30","https://tiget.net/events/490252",""],["vol.3","最大パルプ","","","",""],["vol.3","ファズ宮","","","",""],["vol.3","悪趣味な色彩のカエル","第二回単独公演\n「くちのかたちたち」","場所：プーク人形劇場\n料金：￥2,000\n日時：7/9(木)、19:00～20:10","https://tiget.net/events/483161",""],["vol.3","内山夏木","漫才ユニットライブ\n「準々決勝Aブロック」","場所：新宿fu-+801\n料金：￥1,000\n日時：5/30(土)、13:00～14:30","https://tiget.net/events/483699",""]];
 </script>
     <script>
         // ▼ここに追加：フロントエンド用のサニタイズ関数
@@ -703,7 +796,7 @@ const notices = [["vol.1","フライヤー","vol.1 開催にあたって","","ht
         }
         // ▲ここまで▲
 
-        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbwjUowwoINZYV7KDCsditX21wydOayBpW6JLrqLQTHs_lQjchYe-Xi3vNpJyy6PftQ/exec';
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxEYvPUPrBM8KqW9NJi_WFoAmVXNC9FZTNytC4IxK34ijexMs6FSrhRtmiCSF56ebe7GQ/exec';
         function setupCarousel(containerId, prevBtnId, nextBtnId, indicatorContainerId) {
             const container = document.getElementById(containerId);
             const prev = document.getElementById(prevBtnId);
@@ -769,16 +862,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     // ★ シートの中からこのvolの「フライヤー」行を探す
                     const flyerRow = notices.find(row => row[0] === vol && row[1] === "フライヤー");
                     
-                    if (flyerRow && flyerRow[4]) {
+                    if (flyerRow && flyerRow[5]) { // ★修正：4を5に変更
                         // ★変更：ドライブのURLを画像用に変換してから表示する
-                        const imgUrl = convertDriveUrlFrontend(flyerRow[4]);
+                        const imgUrl = convertDriveUrlFrontend(flyerRow[5]); // ★修正：4を5に変更
                         btn.innerHTML = `<img src="${escapeHtmlFrontend(imgUrl)}" class="vol-poster-img" alt="${vol}">`;
                     } else {
                         // 画像がない場合：黒板風にvol数だけ表示
                         btn.innerHTML = `<div class="vol-poster-noimg">${escapeHtmlFrontend(vol)}</div>`;
                     }
 
-                    btn.onclick = () => openNotice(vol);
+                    // ★変更：フライヤーが開かれたことをGA4に送信する処理を追加
+                    btn.onclick = () => {
+                        openNotice(vol);
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'select_content', {
+                                'content_type': 'flyer',
+                                'item_id': vol
+                            });
+                        }
+                    };
                     buttonsContainer.appendChild(btn);
                 });
 
@@ -873,13 +975,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
-            document.getElementById('openTimetableBtn').onclick = () => document.getElementById('timetableModal').classList.add('is-active');
+          document.getElementById('openTimetableBtn').onclick = () => document.getElementById('timetableModal').classList.add('is-active');
             document.getElementById('closeTimetableBtn').onclick = () => document.getElementById('timetableModal').classList.remove('is-active');
-            document.getElementById('openVideoBtn').onclick = () => { document.getElementById('videoModal').classList.add('is-active'); document.getElementById('modalVideoPlayer').play(); };
-            document.getElementById('closeVideoBtn').onclick = () => { document.getElementById('videoModal').classList.remove('is-active'); document.getElementById('modalVideoPlayer').pause(); };
 
+            // 放送室カルーセルの制御を有効化
             setupCarousel('videoCarousel', 'videoPrev', 'videoNext', 'videoIndicators');
 
+            // ▼ 出席確認（出演者一覧のローディング制御）
             const memberSection = document.getElementById('member');
             const observer = new IntersectionObserver((entries) => {
                 if(entries[0].isIntersecting) {
@@ -907,19 +1009,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, {threshold: 0.1});
             observer.observe(memberSection);
 
+            // ▼ 相談チャットの開閉制御
             const chatBtn = document.getElementById('custom-chat-btn');
             const chatWin = document.getElementById('custom-chat-window');
-            const chatOverlay = document.getElementById('chat-overlay'); // 追加：背景
+            const chatOverlay = document.getElementById('chat-overlay');
 
             chatBtn.onclick = () => {
                 chatWin.classList.add('is-open');
-                chatOverlay.classList.add('is-active'); // 背景を暗くする
+                chatOverlay.classList.add('is-active');
             };
             document.getElementById('chat-close-btn').onclick = () => {
                 chatWin.classList.remove('is-open');
-                chatOverlay.classList.remove('is-active'); // 背景を消す
+                chatOverlay.classList.remove('is-active');
             };
-            chatOverlay.onclick = () => { // 暗い背景をタップしても閉じるようにする
+            chatOverlay.onclick = () => {
                 chatWin.classList.remove('is-open');
                 chatOverlay.classList.remove('is-active');
             };
@@ -946,59 +1049,46 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('chat-send-btn').onclick = sendMessage;
             document.getElementById('chat-input').onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
 
-// ▼ 追加：チャット内のページ内リンクをクリックした時の処理
-    window.handleInternalLink = function(event, hash) {
-        event.preventDefault(); // 新しいタブで開くのを防ぐ
-        
-        // チャットウィンドウを閉じる
-        document.getElementById('custom-chat-window').classList.remove('is-open');
-        document.getElementById('chat-overlay').classList.remove('is-active');
-        
-        // 少し待ってから該当セクションへスーッとスクロール
-        setTimeout(() => {
-            const target = document.querySelector(hash);
-            if(target) target.scrollIntoView({ behavior: 'smooth' });
-        }, 300);
-    };
+            window.handleInternalLink = function(event, hash) {
+                event.preventDefault();
+                document.getElementById('custom-chat-window').classList.remove('is-open');
+                document.getElementById('chat-overlay').classList.remove('is-active');
+                setTimeout(() => {
+                    const target = document.querySelector(hash);
+                    if(target) target.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            };
 
-    function appendMsg(text, sender) {
-        const b = document.getElementById('chat-body');
-        const d = document.createElement('div');
-        d.className = 'chat-msg ' + (sender === 'user' ? 'user-msg' : 'bot-msg');
+            function appendMsg(text, sender) {
+                const b = document.getElementById('chat-body');
+                const d = document.createElement('div');
+                d.className = 'chat-msg ' + (sender === 'user' ? 'user-msg' : 'bot-msg');
 
-        if (sender === 'bot') {
-            // ① AIの回答全体をまずは無害化（サニタイズ）する
-            const safeText = escapeHtmlFrontend(text);
+                if (sender === 'bot') {
+                    const safeText = escapeHtmlFrontend(text);
+                    const urlPattern = /(https?:\/\/[^\s。、！？「」]+)/g;
+                    const linkedText = safeText.replace(urlPattern, (url) => {
+                        try {
+                            const urlObj = new URL(url);
+                            const safeUrl = escapeHtmlFrontend(url);
+                            const safeHash = escapeHtmlFrontend(urlObj.hash);
+
+                            if (urlObj.hostname === window.location.hostname && urlObj.hash) {
+                                return `<a href="${safeHash}" onclick="handleInternalLink(event, '${safeHash}')" style="color: #E6C445; text-decoration: underline;">${safeUrl}</a>`;
+                            }
+                        } catch(e) {}
+                        const safeUrlExternal = escapeHtmlFrontend(url);
+                        return `<a href="${safeUrlExternal}" target="_blank" style="color: #E6C445; text-decoration: underline;">${safeUrlExternal}</a>`;
+                    });
+                    d.innerHTML = linkedText;
+                } else {
+                    d.innerText = text;
+                }
+
+                b.appendChild(d);
+                b.scrollTop = b.scrollHeight;
+            }
             
-            const urlPattern = /(https?:\/\/[^\s。、！？「」]+)/g;
-            // ② 無害化されたテキストからURLを探してリンクに変換
-            const linkedText = safeText.replace(urlPattern, (url) => {
-                try {
-                    const urlObj = new URL(url);
-                    
-                    // URLやハッシュ自体も属性に入れる前に必ず無害化
-                    const safeUrl = escapeHtmlFrontend(url);
-                    const safeHash = escapeHtmlFrontend(urlObj.hash);
-
-                    if (urlObj.hostname === window.location.hostname && urlObj.hash) {
-                        // 無害化済みの安全な変数（safeHash）を使う
-                        return `<a href="${safeHash}" onclick="handleInternalLink(event, '${safeHash}')" style="color: #E6C445; text-decoration: underline;">${safeUrl}</a>`;
-                    }
-                } catch(e) {}
-                
-                const safeUrlExternal = escapeHtmlFrontend(url);
-                return `<a href="${safeUrlExternal}" target="_blank" style="color: #E6C445; text-decoration: underline;">${safeUrlExternal}</a>`;
-            });
-            
-            // ベースが安全になったので innerHTML を使っても大丈夫
-            d.innerHTML = linkedText;
-        } else {
-            d.innerText = text;
-        }
-
-        b.appendChild(d);
-        b.scrollTop = b.scrollHeight;
-    }
             function showTyping() {
                 const b = document.getElementById('chat-body');
                 const d = document.createElement('div');
@@ -1009,41 +1099,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 return d;
             }
 
-            // ★変更：スクロール中は隠して、止まったらひょっこり出すアニメーション処理（最強判定バージョン）
             let scrollTimer;
             const floatingUI = [
                 document.getElementById('hamburgerBtn'),
                 document.getElementById('socialSidebar'),
                 document.getElementById('custom-chat-btn')
             ];
-            const movieSec = document.getElementById('movie'); // 「放送室」セクション
+            const targetSec = document.getElementById('info');
 
             const checkFloatingUI = () => {
-                // メニューやチャットが開いている時は隠さない
                 const isMenuOpen = document.getElementById('hamburgerBtn').classList.contains('is-active');
                 const isChatOpen = document.getElementById('custom-chat-window').classList.contains('is-open');
                 if (isMenuOpen || isChatOpen) return;
 
-                // スクロール中はいったん全て隠す
-                floatingUI.forEach(el => {
-                    if (el) el.classList.add('is-hidden-ui');
-                });
+                floatingUI.forEach(el => { if (el) el.classList.add('is-hidden-ui'); });
 
                 clearTimeout(scrollTimer);
                 scrollTimer = setTimeout(() => {
-                    // スクロール停止時の判定（放送室が画面の半分より上に来たらひょっこり出す）
-                    if (movieSec && movieSec.getBoundingClientRect().top < window.innerHeight / 2) {
-                        floatingUI.forEach(el => {
-                            if (el) el.classList.remove('is-hidden-ui');
-                        });
+                    if (targetSec && targetSec.getBoundingClientRect().top < window.innerHeight / 2) {
+                        floatingUI.forEach(el => { if (el) el.classList.remove('is-hidden-ui'); });
                     }
                 }, 250);
             };
 
             window.addEventListener('scroll', checkFloatingUI);
-            setTimeout(checkFloatingUI, 100); // 読み込み直後にも一度チェック
+            setTimeout(checkFloatingUI, 100);
 
         }); // DOMContentLoadedの閉じカッコ
+
+// ▼ グローバル関数（ローカル動画再生用モーダル制御）
+window.openLocalVideoModal = function(src) {
+    const player = document.getElementById('modalVideoPlayer');
+    player.src = src;
+    document.getElementById('videoModal').classList.add('is-active');
+    player.play().catch(e => console.log("自動再生が制限されました", e));
+};
+
+window.closeLocalVideoModal = function() {
+    document.getElementById('videoModal').classList.remove('is-active');
+    const player = document.getElementById('modalVideoPlayer');
+    player.pause();
+    player.src = '';
+};
 
 function openNotice(vol) {
     const container = document.getElementById('notice-slider-container');
@@ -1051,33 +1148,26 @@ function openNotice(vol) {
     container.innerHTML = '';
     indCont.innerHTML = '';
 
-    // ① 「フライヤー」行だけを抽出（1枚目用）
     const flyerData = notices.find(row => row[0] === vol && row[1] === "フライヤー");
-    // ② それ以外の演者告知行を抽出（2枚目以降用）
     const filteredNotices = notices.filter(row => row[0] === vol && row[1] !== "フライヤー");
 
     let slideIndex = 0;
 
-    // --- 1枚目：フライヤー＆エピソード画面 ---
     if (flyerData) {
         const flyerSlide = document.createElement('div');
         flyerSlide.className = 'carousel-slide active';
 
-        const safeTitle = escapeHtmlFrontend(flyerData[2]);
+        const safeTitle = escapeHtmlFrontend(flyerData[2]).replace(/\n/g, '<br>');
         const safeEpisode = escapeHtmlFrontend(flyerData[3]).replace(/\n/g, '<br>');
-        const safeImg = escapeHtmlFrontend(convertDriveUrlFrontend(flyerData[4]));
+        const safeImg = escapeHtmlFrontend(convertDriveUrlFrontend(flyerData[5]));
 
         flyerSlide.innerHTML = `
             <div class="notice-card" style="background:#fff; width:100%; max-width:none; padding: 20px 25px; display:flex; flex-direction:column;">
                 <strong class="flyer-pc-title" style="color:var(--bg-board); font-size:1.1rem; display:block; margin-bottom:8px; border-bottom: 2px solid var(--bg-board); padding-bottom: 5px; flex-shrink: 0;">${safeTitle}</strong>
-                
                 <div class="notice-scroll-area" style="flex-grow:1; overflow-y:auto;">
                     <img src="${safeImg}" style="width:100%; border-radius:4px; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
-                    <div class="flyer-episode-text">
-                        ${safeEpisode}
-                    </div>
+                    <div class="flyer-episode-text">${safeEpisode}</div>
                 </div>
-
                 <div style="text-align: center; margin-top: 20px; flex-shrink: 0;">
                     <a href="https://x.com/shuudangekou1" target="_blank" class="notice-link flyer-pc-btn" style="background-color:#000 !important; color:#fff !important; font-size: 1rem !important; padding: 14px 10px !important; width: 100%; box-sizing: border-box; white-space: nowrap;"><i class="fa-brands fa-x-twitter" style="margin-right:8px;"></i>集団下校公式 アカウント</a>
                 </div>
@@ -1091,14 +1181,13 @@ function openNotice(vol) {
         slideIndex++;
     }
 
-    // --- 2枚目以降：演者告知カード ---
     filteredNotices.forEach((row, i) => {
         const slide = document.createElement('div');
         const isActive = (slideIndex === 0 && i === 0) ? ' active' : '';
         slide.className = 'carousel-slide' + isActive;
 
         const safeCombi = escapeHtmlFrontend(row[1]);
-        const safeTitle = escapeHtmlFrontend(row[2]);
+        const safeTitle = escapeHtmlFrontend(row[2]).replace(/\n/g, '<br>');
         const safeDetail = escapeHtmlFrontend(row[3]).replace(/\n/g, '<br>');
 
         let safeLinkHtml = '';
@@ -1109,17 +1198,25 @@ function openNotice(vol) {
             }
         }
 
+        let safeComboImgHtml = '';
+        if (row[5]) {
+            const imgUrl = String(row[5]).trim();
+            if (imgUrl !== '') {
+                const convertedUrl = convertDriveUrlFrontend(imgUrl);
+                safeComboImgHtml = `<img src="${escapeHtmlFrontend(convertedUrl)}" style="width:100%; border-radius:4px; box-shadow:0 2px 5px rgba(0,0,0,0.2); margin-bottom: 15px;">`;
+            }
+        }
+
         slide.innerHTML = `
             <div class="notice-card" style="display:flex; flex-direction:column; padding: 20px 25px; width: 100%; max-width: none;">
                 <div style="flex-shrink: 0;">
                     <span class="combi-name">${safeCombi}</span>
                     <h3>${safeTitle}</h3>
                 </div>
-                
                 <div class="notice-scroll-area" style="flex-grow:1; overflow-y:auto;">
+                    ${safeComboImgHtml}
                     <div class="detail">${safeDetail}</div>
                 </div>
-
                 ${safeLinkHtml ? `<div style="flex-shrink: 0; margin-top: 15px;">${safeLinkHtml}</div>` : ''}
             </div>
         `;
@@ -1139,6 +1236,6 @@ function closeNotice() {
     document.getElementById('notice-overlay').style.display = 'none';
     document.body.style.overflow = 'auto';
 }
-    </script>
+</script>
 </body>
 </html>
